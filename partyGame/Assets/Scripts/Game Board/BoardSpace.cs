@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class BoardSpace : MonoBehaviour
 {
-    public int myNum, nextNum, prevNum;
+    public static BoardSpace inst;
+
+    public GameObject mySpace, nextSpace, prevSpace;
     public Transform pos1, pos2, pos3, pos4;
+
+    private void Start()
+    {
+        inst = this;
+    }
 }
