@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using SocketIO;
 
-public class nh_network : MonoBehaviour
+public class ServerManager : MonoBehaviour
 {
-    public static nh_network server;
+    public static ServerManager server;
 
     [TextArea(3, 10)]
     public string serverQuickRef;
@@ -53,13 +53,11 @@ public class nh_network : MonoBehaviour
 
     public void createNewLobby()
     {
-        //socket.Emit("createNewLobby");
         socket.Emit("createRoom");
     }
 
     public void joinRoom(string roomName)
     {
-        //socket.Emit("joinLobby");
         socket.Emit("joinRoom", new JSONObject(quote + roomName + quote));
     }
 
