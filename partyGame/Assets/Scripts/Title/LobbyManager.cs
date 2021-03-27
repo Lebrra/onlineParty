@@ -80,6 +80,8 @@ public class LobbyManager : MonoBehaviour
                 newPlayer.GetComponent<TextMeshProUGUI>().text = username;
                 names.Add(id, newPlayer);
             }
+
+            if (ServerManager.server.myID == id) names[id].GetComponent<TextMeshProUGUI>().color = Color.green;
         }
 
         if(names.Count > ids.Count)

@@ -6,8 +6,16 @@ public class RoomField : MyInputField
 {
     public override void SubmitText()
     {
-        ServerManager.server.JoinRoom(inputField.text);
+        if (inputField.text != "")
+        {
+            //check for typos
+            string firstLetter = inputField.text[0].ToString();
+            string code = inputField.text.ToLower();
+            code = firstLetter.ToUpper() + code.Substring(1);
+            Debug.Log("Room code received: " + code);
 
-        base.SubmitText();
+            ServerManager.server.JoinRoom(inputField.text);
+            base.SubmitText();
+        }
     }
 }

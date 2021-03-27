@@ -15,7 +15,7 @@ public class ServerManager : MonoBehaviour
 
     char quote = '"';
 
-    //public playerManager playerManager;
+    public string myID { get; private set; }
 
     private void Awake()
     {
@@ -50,6 +50,7 @@ public class ServerManager : MonoBehaviour
     void onConnectionEstabilished(SocketIOEvent evt)
     {
         Debug.Log("Player is connected: " + evt.data.GetField("id"));
+        Debug.Log("Temp name: " + evt.data.GetField("name"));
 
         if (PlayerPrefs.HasKey("username"))
         {
@@ -63,6 +64,8 @@ public class ServerManager : MonoBehaviour
             Debug.Log("this player does not have a username");
             OnPlayerConnected(null);
         }
+
+        myID = evt.data.GetField("id").ToString().Trim('"');
     }
 
     void OnPlayerConnected(SocketIOEvent evt)
