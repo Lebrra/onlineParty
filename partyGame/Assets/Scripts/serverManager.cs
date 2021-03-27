@@ -33,13 +33,14 @@ public class ServerManager : MonoBehaviour
 
         // The lines below setup 'listener' functions
         socket.On("connectionmessage", onConnectionEstabilished);
-        socket.On("roomUsers", loadRoomUsers);
-        socket.On("removeUser", removeUser);
-        socket.On("createdRoom", createdRoom);
-        socket.On("roomNotFound", roomError);
-        socket.On("loadGame", loadGame);
+        socket.On("playerConnected", OnPlayerConnected);
+        socket.On("roomUsers", LoadRoomUsers);
+        //socket.On("removeUser", removeUser);
+        socket.On("joinedRoom", JoiningRoom);
+        socket.On("roomNotFound", RoomError);
+        socket.On("loadGame", LoadGame);
 
-        socket.On("ping", ping);
+        socket.On("ping", Ping);
 
     }
 
@@ -49,90 +50,92 @@ public class ServerManager : MonoBehaviour
     void onConnectionEstabilished(SocketIOEvent evt)
     {
         Debug.Log("Player is connected: " + evt.data.GetField("id"));
+
+        if (PlayerPrefs.HasKey("username"))
+        {
+            // send username to server to update
+            string playerName = PlayerPrefs.GetString("username");
+            Debug.Log("player " + playerName + " has connected");
+            ChangeUsername(playerName);
+        }
+        else
+        {
+            Debug.Log("this player does not have a username");
+            OnPlayerConnected(null);
+        }
     }
 
-    public void createNewLobby()
+    void OnPlayerConnected(SocketIOEvent evt)
+    {
+        //disable connector screen
+        ConnectionPanel.inst?.DisablePanel();
+    }
+
+    public void ChangeUsername(string name)
+    {
+        socket.Emit("updateUsername", new JSONObject(quote + name + quote));
+    }
+
+    public void CreateNewLobby()
     {
         socket.Emit("createRoom");
     }
 
-    public void joinRoom(string roomName)
+    public void JoinRoom(string roomName)
     {
         socket.Emit("joinRoom", new JSONObject(quote + roomName + quote));
     }
 
-    public void leaveRoom()
+    public void LeaveRoom()
     {
         socket.Emit("leaveRoom");
     }
 
-    void createdRoom(SocketIOEvent evt)
+    void JoiningRoom(SocketIOEvent evt)
     {
-        Debug.Log("Created new room: " + evt.data.GetField("name"));
-        //LobbyFunctions.inst.enterRoom(evt.data.GetField("name").ToString().Trim('"'));
+        Debug.Log("Joined room: " + evt.data.GetField("name"));
+        LobbyManager.instance.JoinRoom(evt.data.GetField("name").ToString().Trim('"'));
     }
 
-    void roomError(SocketIOEvent evt)
+    void LoadRoomUsers(SocketIOEvent evt)
     {
-        //LobbyFunctions.inst.showRoomError();
+        Debug.Log("loading room usernames...");
+        LobbyManager.instance.UpdateRoomList(evt);
     }
 
-    public void ping(SocketIOEvent socketIOEvent)
+    void RoomError(SocketIOEvent evt)
+    {
+        LobbyManager.instance.ShowRoomError();
+    }
+
+    public void Ping(SocketIOEvent socketIOEvent)
     {
         //Debug.Log("Ping");
         //ConnectionIndicator.instance?.Ping();
     }
 
     #endregion
-    #region Username Functions
-
-    public void newUsername(string name)
-    {
-        name = quote + name + quote;
-
-        JSONObject test = new JSONObject(name);
-        socket.Emit("updateUsername", test);
-    }
-
-    void loadRoomUsers(SocketIOEvent evt)
-    {
-        Debug.Log("loading room usernames...");
-        //ua.removeAllUsernames();
-
-        for (int i = 0; i < evt.data.Count; i++)
-        {
-            JSONObject jsonData = evt.data.GetField(i.ToString());
-
-            Debug.Log(jsonData.GetField("username"));
-            //ua.addUsername(jsonData.GetField("id").ToString().Trim('"'), jsonData.GetField("username").ToString().Trim('"'));
-        }
-    }
 
 
-    void removeUser(SocketIOEvent evt)
-    {
-        //ua.removeUsername(evt.data.GetField("id").ToString().Trim('"'));
-    }
-    #endregion
     #region Game Functions
-    public void startGame()
+    public void StartGame()
     {
         // tells server to start game
         socket.Emit("startGame");
     }
 
-    public void setReady()
+    public void SetReady()
     {
         socket.Emit("setReady");
     }
 
-    void loadGame(SocketIOEvent evt)
+    void LoadGame(SocketIOEvent evt)
     {
         Debug.Log("The game has been started!");
         UnityEngine.SceneManagement.SceneManager.LoadScene(1);
     }
 
-    public void destroyGameData()
+    public void DestroyGameData()
     {
         socket.Emit("deleteGame");
     }
