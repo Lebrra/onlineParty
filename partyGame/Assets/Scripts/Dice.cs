@@ -5,47 +5,69 @@ using UnityEngine.UI;
 
 public class Dice : MonoBehaviour
 {
-    public Sprite image1, image2, image3;
     public static Dice inst;
-    public int num;
     public Animator anim;
+    public GameObject dieScreen;
+    bool rolling = false;
 
-    // Start is called before the first frame update
     void Awake()
     {
         inst = this;
         anim = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void PickRightNum(int rollNum)
     {
-        
-    }
-
-    public void Roll()
-    {
-        anim.SetTrigger("Roll3");
-    }
-
-    public void GetNum(int rollNum)
-    {
-        this.num = rollNum;
-    }
-
-    public void PickRightNum()
-    {
-        switch (num)
+        /*
+        switch (rollNum)
         {
             case 1:
-                GetComponent<Image>().sprite = image1;
+                anim.SetTrigger("Roll1");
                 return;
             case 2:
-                GetComponent<Image>().sprite = image2;
+                anim.SetTrigger("Roll2");
                 return;
             case 3:
-                GetComponent<Image>().sprite = image3;
+                anim.SetTrigger("Roll3");
                 return;
         }
+        */
+        if(!rolling)
+            StartCoroutine("PickRightDieWaitTimer", rollNum);
     }
+
+    public void ResetDie()
+    {
+        StartCoroutine("DiceResetCountdown");
+    }
+
+    public IEnumerator DiceResetCountdown()
+    {
+        yield return new WaitForSeconds(3f);
+        //dieScreen.SetActive(false);
+        anim.SetTrigger("ResetDie");
+        dieScreen.SetActive(false);
+        rolling = false;
+    }
+
+    
+    public IEnumerator PickRightDieWaitTimer(int rollNum)
+    {
+        rolling = true;
+        yield return new WaitForSeconds(.5f);
+
+        switch (rollNum)
+        {
+            case 1:
+                anim.SetTrigger("Roll1");
+                break;
+            case 2:
+                anim.SetTrigger("Roll2");
+                break;
+            case 3:
+                anim.SetTrigger("Roll3");
+                break;
+        }
+    }
+    
 }

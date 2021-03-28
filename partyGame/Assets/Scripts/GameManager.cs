@@ -23,10 +23,11 @@ public class GameManager : MonoBehaviour
 
     public void RollDice()
     {
+        diceScreen.SetActive(true);
         int rand = Random.Range(1, 4);
         Debug.Log(rand);
-        diceScreen.SetActive(true);
-        Dice.inst.Roll();
-        Dice.inst.GetNum(rand);
+        Dice.inst.PickRightNum(rand);
+        Dice.inst.ResetDie();
+        //Dice.inst.ResetDie();
     }
 }
