@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using TMPro;
 using SocketIO;
 
@@ -12,7 +13,9 @@ public class LobbyManager : MonoBehaviour
     public GameObject lobbyPanel;
     public GameObject roomEnterPanel;
 
+    [Header("Join Objects")]
     public Animator errorRoomAnim;
+    public GameObject joinInputField;
 
     [Header("Room Objects")]
     public TextMeshProUGUI roomName;
@@ -41,6 +44,7 @@ public class LobbyManager : MonoBehaviour
     {
         mainPanel.SetActive(false);
         roomEnterPanel.SetActive(true);
+        //StartCoroutine(DelayInputSelect());
     }
 
     public void JoinRoom(string roomName)
@@ -53,6 +57,14 @@ public class LobbyManager : MonoBehaviour
     public void ShowRoomError()
     {
         errorRoomAnim.SetTrigger("Flash");
+        roomEnterPanel.SetActive(true);
+        //StartCoroutine(DelayInputSelect());
+    }
+
+    IEnumerator DelayInputSelect()
+    {
+        yield return new WaitForEndOfFrame();
+        EventSystem.current.SetSelectedGameObject(joinInputField, null);
     }
 
     public void UpdateRoomList(SocketIOEvent roomNames)
@@ -132,6 +144,6 @@ public class LobbyManager : MonoBehaviour
 
     public void PlayGame()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+        ServerManager.server.StartGame();
     }
 }
