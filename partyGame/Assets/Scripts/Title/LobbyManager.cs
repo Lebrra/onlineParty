@@ -19,6 +19,7 @@ public class LobbyManager : MonoBehaviour
     public GameObject namePrefab;
     public GameObject namesContainer;
     Dictionary<string, GameObject> names;
+    public UnityEngine.UI.Button playButton;
 
     void Awake()
     {
@@ -92,18 +93,45 @@ public class LobbyManager : MonoBehaviour
                 if (!ids.Contains(a))
                 {
                     //this user has left, remove them
-                    Destroy(names[a]);
+                    Debug.Log("removed " + a);
+                    GameObject temp = names[a];
                     names.Remove(a);
+                    Destroy(temp);
+                    //temp.SetActive(false);
+                    break;
                 }
             }
+        }
+
+        Debug.Log("member count: " + names.Count);
+        if(names.Count >= 2)
+        {
+            playButton.interactable = true;
+        }
+        else
+        {
+            playButton.interactable = false;
         }
     }
 
     public void CloseRoom()
     {
+        playButton.interactable = false;
+        ServerManager.server.LeaveRoom();
         foreach (var a in names.Values) Destroy(a);
         names = new Dictionary<string, GameObject>();
         lobbyPanel.SetActive(false);
         mainPanel.SetActive(true);
+    }
+
+    public void CloseJoin()
+    {
+        roomEnterPanel.SetActive(false);
+        mainPanel.SetActive(true);
+    }
+
+    public void PlayGame()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(1);
     }
 }
