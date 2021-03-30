@@ -48,6 +48,7 @@ public class Dice : MonoBehaviour
         anim.SetTrigger("ResetDie");
         dieScreen.SetActive(false);
         rolling = false;
+        GameManager.inst.myTurn = false;
     }
 
     

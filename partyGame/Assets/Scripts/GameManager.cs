@@ -8,9 +8,12 @@ public class GameManager : MonoBehaviour
     public bool myTurn;
     public GameObject actionChoice, diceScreen;
 
+    public static GameManager inst;
+
     // Start is called before the first frame update
     void Start()
     {
+        inst = this;
         diceScreen.SetActive(false);
     }
 
@@ -19,6 +22,8 @@ public class GameManager : MonoBehaviour
     {
         if (myTurn)
             actionChoice.SetActive(true);
+        else
+            actionChoice.SetActive(false);
     }
 
     public void RollDice()
@@ -28,6 +33,5 @@ public class GameManager : MonoBehaviour
         Debug.Log(rand);
         Dice.inst.PickRightNum(rand);
         Dice.inst.ResetDie();
-        //Dice.inst.ResetDie();
     }
 }
