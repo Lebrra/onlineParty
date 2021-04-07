@@ -8,7 +8,7 @@ public class ClockWatcher : MonoBehaviour
 {
     public TextMeshProUGUI clock;
 
-    public float startTime;
+    public float startTime, myTime;
     public bool timerActice;
 
     // Start is called before the first frame update
@@ -25,11 +25,11 @@ public class ClockWatcher : MonoBehaviour
         if (timerActice)
         {
             startTime -= Time.deltaTime;
-            clock.text = System.Math.Round(startTime, 2).ToString();
+            clock.text = System.Math.Round(startTime, 1).ToString();
         }
         else
         {
-            System.Math.Round(startTime, 2).ToString();
+            System.Math.Round(startTime, 1).ToString();
         }
     }
 
@@ -37,6 +37,7 @@ public class ClockWatcher : MonoBehaviour
     {
         timerActice = false;
         clock.color = new Color(255, 255, 255, 255);
+        myTime = startTime;
     }
 
     public IEnumerator StartClock(float delay)
