@@ -34,6 +34,15 @@ public class LobbyManager : MonoBehaviour
         names = new Dictionary<string, GameObject>();
     }
 
+        // TEMP UPDATE FUNCTION
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            PlayerPrefs.DeleteAll();
+        }
+    }
+
     public void CreateGame()
     {
         ServerManager.server.CreateNewLobby();
@@ -94,7 +103,7 @@ public class LobbyManager : MonoBehaviour
                 names.Add(id, newPlayer);
             }
 
-            if (ServerManager.server.myID == id) names[id].GetComponent<TextMeshProUGUI>().color = Color.green;
+            if (ServerManager.server.GetSocket() == id) names[id].GetComponent<TextMeshProUGUI>().color = Color.green;
         }
 
         if(names.Count > ids.Count)

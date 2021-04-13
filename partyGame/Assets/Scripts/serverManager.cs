@@ -15,8 +15,6 @@ public class ServerManager : MonoBehaviour
 
     char quote = '"';
 
-    public string myID { get; private set; }
-
     private void Awake()
     {
         if (server) Destroy(gameObject);
@@ -32,16 +30,24 @@ public class ServerManager : MonoBehaviour
         //playerManager = GameObject.Find("Player Manager").GetComponent<playerManager>();
 
         // The lines below setup 'listener' functions
+
+            // Connection/Room Functions
         socket.On("connectionmessage", onConnectionEstabilished);
         socket.On("playerConnected", OnPlayerConnected);
         socket.On("roomUsers", LoadRoomUsers);
-        //socket.On("removeUser", removeUser);
         socket.On("joinedRoom", JoiningRoom);
         socket.On("roomNotFound", RoomError);
-        socket.On("loadGame", LoadGame);
-
         socket.On("ping", Ping);
 
+            // Game Functions
+        socket.On("loadGame", LoadGame);
+        socket.On("loadTurnOrder", LoadTurnOrder);
+
+    }
+
+    public string GetSocket()
+    {
+        return socket.sid;
     }
 
     #region Connection/Room Functions
@@ -64,8 +70,6 @@ public class ServerManager : MonoBehaviour
             Debug.Log("this player does not have a username");
             OnPlayerConnected(null);
         }
-
-        myID = evt.data.GetField("id").ToString().Trim('"');
     }
 
     void OnPlayerConnected(SocketIOEvent evt)
@@ -127,11 +131,6 @@ public class ServerManager : MonoBehaviour
         socket.Emit("startGame");
     }
 
-    public void SetReady()
-    {
-        socket.Emit("setReady");
-    }
-
     void LoadGame(SocketIOEvent evt)
     {
         Debug.Log("The game has been started!");
@@ -141,6 +140,38 @@ public class ServerManager : MonoBehaviour
     public void DestroyGameData()
     {
         socket.Emit("deleteGame");
+    }
+
+    public void SetReady()
+    {
+        socket.Emit("setReady");
+    }
+
+    void LoadTurnOrder(SocketIOEvent evt)
+    {
+        PlayerObject[] players = new PlayerObject[evt.data.Count];
+        int myIndex = -1;
+        Debug.Log("Player Order List: ");
+
+        for (int i = 0; i < evt.data.Count; i++)
+        {
+            JSONObject jsonData = evt.data.GetField(i.ToString());
+            string id = jsonData.GetField("id").ToString().Trim('"');
+            string username = jsonData.GetField("username").ToString().Trim('"');
+            int index = -1;
+            int.TryParse(jsonData.GetField("index").ToString().Trim('"'), out index);
+
+            if (index != -1)
+            {
+
+                players[index] = new PlayerObject();
+                players[index].id = id;
+                players[index].username = username;
+            }
+            if (socket.sid == id) myIndex = i;
+        }
+
+        GameManager.inst.LoadPlayerUI(myIndex, players);
     }
 
     #endregion
