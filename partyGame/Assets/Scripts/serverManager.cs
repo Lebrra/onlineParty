@@ -171,6 +171,7 @@ public class ServerManager : MonoBehaviour
             if (socket.sid == id) myIndex = i;
         }
 
+        foreach (PlayerObject p in players) Debug.Log(p.username);
         GameManager.inst.LoadPlayerUI(myIndex, players);
     }
 

@@ -46,26 +46,28 @@ public class GameManager : MonoBehaviour
         Dice.inst.ResetDie();
     }
 
-    public void LoadPlayerUI(int thisPlayer, PlayerObject[] players)
+    public void LoadPlayerUI(int thisPlayer, PlayerObject[] playerList)
     {
         if (thisPlayer == -1) Debug.LogError("player index not found");
         else myUser = thisPlayer;
 
-        this.players = new PlayerObject[players.Length];
+        players = new PlayerObject[playerList.Length];
 
-        for(int i = 0; i < players.Length; i++)
+        for(int i = 0; i < playerList.Length; i++)
         {
-            this.players[i] = new PlayerObject();
+            players[i] = new PlayerObject();
 
-            this.players[i].id = players[i].id;
-            this.players[i].username = players[i].username;
-            this.players[i].myUI = uiObjects[i];
+            players[i].id = playerList[i].id;
+            players[i].username = playerList[i].username;
+            players[i].myUI = uiObjects[i];
 
             uiObjects[i].SetActive(true);
-            uiObjects[i].transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = this.players[i].username;
+            uiObjects[i].transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = players[i].username;
+
+            Debug.Log("loaded player " + players[i].username);
         }
 
-        this.players[myUser].myUI.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().color = Color.green;
+        players[myUser].myUI.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().color = Color.green;
     }
 }
 
