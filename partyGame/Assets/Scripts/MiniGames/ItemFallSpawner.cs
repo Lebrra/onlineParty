@@ -24,6 +24,7 @@ public class ItemFallSpawner : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         DropItem(difficulty);
+        StartCoroutine("DropTime", 3);
     }
 
     public void DropItem(int level)
