@@ -432,7 +432,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4000089, g: 0.9528302, b: 0.4996557, a: 1}
+  m_Color: {r: 0.83137256, g: 0.83137256, b: 0.83137256, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1481,12 +1481,12 @@ MonoBehaviour:
   myUser: -1
   players: []
   uiObjects:
-  - {fileID: 86159392}
-  - {fileID: 819213500}
-  - {fileID: 71701552}
-  - {fileID: 1091219063}
-  - {fileID: 1382611492}
-  - {fileID: 1266304614}
+  - {fileID: 86159394}
+  - {fileID: 819213502}
+  - {fileID: 71701554}
+  - {fileID: 1091219065}
+  - {fileID: 1382611494}
+  - {fileID: 1266304616}
 --- !u!4 &1043570619
 Transform:
   m_ObjectHideFlags: 0

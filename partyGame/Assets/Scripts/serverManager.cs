@@ -11,6 +11,9 @@ public class ServerManager : MonoBehaviour
     [TextArea(3, 10)]
     public string serverQuickRef;
 
+    [TextArea(3, 10)]
+    public string localFileLoc;
+
     SocketIOComponent socket;
 
     char quote = '"';
@@ -42,7 +45,7 @@ public class ServerManager : MonoBehaviour
             // Game Functions
         socket.On("loadGame", LoadGame);
         socket.On("loadTurnOrder", LoadTurnOrder);
-
+        socket.On("declareTurn", DeclareTurn);
     }
 
     public string GetSocket()
@@ -173,6 +176,22 @@ public class ServerManager : MonoBehaviour
 
         foreach (PlayerObject p in players) Debug.Log(p.username);
         GameManager.inst.LoadPlayerUI(myIndex, players);
+    }
+
+    void DeclareTurn(SocketIOEvent evt)
+    {
+        // Server telling client it is [index] turn
+        int turn = -1;
+        if (int.TryParse(evt.data.GetField("turn").ToString().Trim('"'), out turn))
+        {
+            GameManager.inst.SetPlayerTurn(turn);
+        }
+        else Debug.LogError("turn order invalid.");
+    }
+
+    public void AdvanceTurn()
+    {
+        socket.Emit("advanceTurn");
     }
 
     #endregion

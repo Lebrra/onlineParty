@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     public int myUser = -1;
     public PlayerObject[] players;
 
-    public GameObject[] uiObjects;
+    public Image[] uiObjects;
 
     Color32 normalColor = new Color32(212, 212, 212, 255);
     Color32 turnColor = new Color32(103, 243, 127, 255);
@@ -28,17 +28,11 @@ public class GameManager : MonoBehaviour
         ServerManager.server?.SetReady();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (myTurn)
-            actionChoice.SetActive(true);
-        else
-            actionChoice.SetActive(false);
-    }
-
     public void RollDice()
     {
+        if (!myTurn) return;
+        myTurn = false;
+
         diceScreen.SetActive(true);
         int rand = Random.Range(1, 4);
         Debug.Log(rand);
@@ -59,15 +53,39 @@ public class GameManager : MonoBehaviour
 
             players[i].id = playerList[i].id;
             players[i].username = playerList[i].username;
-            players[i].myUI = uiObjects[i];
+            players[i].myUI = uiObjects[i].gameObject;
 
-            uiObjects[i].SetActive(true);
+            uiObjects[i].gameObject.SetActive(true);
             uiObjects[i].transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = players[i].username;
 
             Debug.Log("loaded player " + players[i].username);
         }
 
         players[myUser].myUI.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().color = Color.green;
+    }
+
+    public void SetPlayerTurn(int turn)
+    {
+        foreach (Image a in uiObjects) a.color = normalColor;
+
+        Debug.Log("it is " + players[turn].username + "'s turn!");
+
+        if (turn == myUser)
+        {
+            Debug.LogWarning("its your turn!");
+            myTurn = true;
+            actionChoice.SetActive(true);
+        }
+
+        uiObjects[turn].color = turnColor;
+    }
+
+    public void EndTurn()
+    {
+        myTurn = false;
+        actionChoice.SetActive(false);
+        foreach (Image a in uiObjects) a.color = normalColor;
+        ServerManager.server?.AdvanceTurn();
     }
 }
 

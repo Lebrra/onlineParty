@@ -502,6 +502,7 @@ MonoBehaviour:
     Server:
 
     ws://online-party-game.herokuapp.com/socket.io/?EIO=4&transport=websocket'
+  localFileLoc: D:\- Documents -\SCHOOL\Semester_8\MAGD\Final Project\onlineParty\serverFolder
 --- !u!4 &104103438
 Transform:
   m_ObjectHideFlags: 0
