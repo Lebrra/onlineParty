@@ -31,7 +31,7 @@ public class ItemFallSpawner : MonoBehaviour
     {
         int rand = Random.Range(1, level+1);
 
-        float randLoc = Random.Range(4f, -4f);
+        float randLoc = Random.Range(8f, -8f);
         Vector2 spawnLoc = new Vector2(randLoc, transform.position.y);
 
         switch (difficulty)

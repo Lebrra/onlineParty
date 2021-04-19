@@ -11,4 +11,12 @@ public class Item : MonoBehaviour
     };
 
     public itemType myType;
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            Destroy(gameObject);
+        }
+    }
 }

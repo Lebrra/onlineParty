@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class DoodleJumpControles : MonoBehaviour
 {
-    Rigidbody2D rb;
+    Rigidbody rb;
 
     public float moveSpeed;
     float movement = 0f;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -21,7 +21,7 @@ public class DoodleJumpControles : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector2 vel = rb.velocity;
+        Vector3 vel = rb.velocity;
         vel.x = movement;
         rb.velocity = vel;
     }
