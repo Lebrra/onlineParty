@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clock: {fileID: 1803692830}
+  anim: {fileID: 0}
   startTime: 10
   myTime: 0
   timerActice: 0

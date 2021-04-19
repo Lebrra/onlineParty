@@ -32,7 +32,7 @@ public class DoodleJumpControles : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Platform"))
         {
-            Physics.IgnoreCollision(c, other, true);
+            Physics.IgnoreCollision(c, other);
         }
     }
 
