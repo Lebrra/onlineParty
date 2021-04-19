@@ -7,6 +7,7 @@ using TMPro;
 public class ClockWatcher : MonoBehaviour
 {
     public TextMeshProUGUI clock;
+    public Animator anim;
 
     public float startTime, myTime;
     public bool timerActice;
@@ -44,6 +45,7 @@ public class ClockWatcher : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         timerActice = true;
+        anim.SetTrigger("Start");
     }
 
     public IEnumerator HideClock(float delay)

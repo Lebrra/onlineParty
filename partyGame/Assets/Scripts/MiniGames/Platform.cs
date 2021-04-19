@@ -6,14 +6,14 @@ public class Platform : MonoBehaviour
 {
     public float jumpForce;
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter(Collision collision)
     {
         if(collision.relativeVelocity.y <= 0f)
         {
-            Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
+            Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
             if(rb != null)
             {
-                Vector2 vel = rb.velocity;
+                Vector3 vel = rb.velocity;
                 vel.y = jumpForce;
                 rb.velocity = vel;
             }

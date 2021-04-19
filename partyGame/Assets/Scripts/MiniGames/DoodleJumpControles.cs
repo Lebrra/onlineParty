@@ -5,6 +5,7 @@ using UnityEngine;
 public class DoodleJumpControles : MonoBehaviour
 {
     Rigidbody rb;
+    Collider c;
 
     public float moveSpeed;
     float movement = 0f;
@@ -12,6 +13,7 @@ public class DoodleJumpControles : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        c = GetComponent<Collider>();
     }
 
     void Update()
@@ -24,5 +26,21 @@ public class DoodleJumpControles : MonoBehaviour
         Vector3 vel = rb.velocity;
         vel.x = movement;
         rb.velocity = vel;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Platform"))
+        {
+            Physics.IgnoreCollision(c, other, true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Platform"))
+        {
+            Physics.IgnoreCollision(c, other, false);
+        }
     }
 }

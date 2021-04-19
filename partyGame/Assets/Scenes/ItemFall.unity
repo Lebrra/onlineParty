@@ -237,7 +237,7 @@ MonoBehaviour:
   spawn: {fileID: 1957511538}
   goodItem: {fileID: 7713742943095779897, guid: 9aa0dc4e309012f4cbad3bbdd71b9bd1, type: 3}
   badItem: {fileID: 882921268160272939, guid: 7bb1861c41ca97f43a781afd115573e0, type: 3}
-  difficulty: 1
+  difficulty: 2
 --- !u!4 &680341465
 Transform:
   m_ObjectHideFlags: 0
@@ -652,7 +652,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e40737deea583f240a1995c0a2a1f6c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 6
 --- !u!65 &4763585080534875431
 BoxCollider:
   m_ObjectHideFlags: 0
