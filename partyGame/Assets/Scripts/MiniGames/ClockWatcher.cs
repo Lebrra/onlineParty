@@ -7,10 +7,10 @@ using TMPro;
 public class ClockWatcher : MonoBehaviour
 {
     public TextMeshProUGUI clock;
-    public Animator anim;
+    public Animator anim, buttonAnim;
 
     public float startTime, myTime;
-    public bool timerActice;
+    public bool timerActice, canPress;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +32,13 @@ public class ClockWatcher : MonoBehaviour
         {
             System.Math.Round(startTime, 1).ToString();
         }
+
+        if (Input.GetKeyDown(KeyCode.Space) && canPress)
+        {
+            buttonAnim.SetTrigger("ButtonPress");
+            canPress = false;
+            StopClock();
+        }
     }
 
     public void StopClock()
@@ -51,6 +58,7 @@ public class ClockWatcher : MonoBehaviour
     public IEnumerator HideClock(float delay)
     {
         yield return new WaitForSeconds(delay);
-        clock.color = new Color(0, 0, 0, 0);   
+        clock.color = new Color(0, 0, 0, 0);
+        canPress = true;
     }
 }

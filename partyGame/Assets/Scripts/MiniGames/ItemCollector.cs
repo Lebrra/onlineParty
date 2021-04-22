@@ -9,15 +9,18 @@ public class ItemCollector : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.GetComponent<Item>().myType == Item.itemType.good)
+        if (collision.gameObject.CompareTag("Item"))
         {
-            itemsCollected++;
-            Destroy(collision.gameObject);
-        }
-        else if (collision.gameObject.GetComponent<Item>().myType == Item.itemType.bad)
-        {
-            badItemsCollected++;
-            Destroy(collision.gameObject);
+            if (collision.gameObject.GetComponent<Item>().myType == Item.itemType.good)
+            {
+                itemsCollected++;
+                Destroy(collision.gameObject);
+            }
+            else if (collision.gameObject.GetComponent<Item>().myType == Item.itemType.bad)
+            {
+                badItemsCollected++;
+                Destroy(collision.gameObject);
+            }
         }
     }
 }
