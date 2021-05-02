@@ -1,11 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ItemCollector : MonoBehaviour
 {
     public int itemsCollected = 0;
     public int badItemsCollected = 0;
+    public static ItemCollector inst;
+    public GameObject scorePanel;
+    public TextMeshProUGUI scoreText;
+
+    private void Start()
+    {
+        inst = this;
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -18,9 +27,19 @@ public class ItemCollector : MonoBehaviour
             }
             else if (collision.gameObject.GetComponent<Item>().myType == Item.itemType.bad)
             {
-                badItemsCollected++;
+                itemsCollected--;
                 Destroy(collision.gameObject);
             }
         }
+    }
+
+    private void Update()
+    {
+        scoreText.text = "Final Score: " + itemsCollected.ToString();
+    }
+
+    public void DisplayScore()
+    {
+        scorePanel.SetActive(true);
     }
 }

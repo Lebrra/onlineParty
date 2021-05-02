@@ -8,23 +8,34 @@ public class ItemFallSpawner : MonoBehaviour
     public GameObject goodItem, badItem;
 
     public int difficulty = 1;
+    public float gameDuration = 15f;
+    public bool gameState = false;
 
     void Start()
     {
-        
+        gameState = true;
+        StartCoroutine("DropTime", 3);
     }
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
-            StartCoroutine("DropTime", 3);
+        gameDuration -= Time.deltaTime;
+        if (gameDuration < 0)
+            gameState = false;
+
+        if (!gameState)
+        {
+            ItemCollector.inst.DisplayScore();
+            StopCoroutine("DropTime");
+            ItemCollector.inst.GetComponent<DoodleJumpControles>().enabled = false;
+        }
     }
 
     public IEnumerator DropTime(float delay)
     {
         yield return new WaitForSeconds(delay);
         DropItem(difficulty);
-        StartCoroutine("DropTime", 3);
+        StartCoroutine("DropTime", 1.5);
     }
 
     public void DropItem(int level)
