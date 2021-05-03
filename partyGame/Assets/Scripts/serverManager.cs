@@ -46,6 +46,7 @@ public class ServerManager : MonoBehaviour
         socket.On("loadGame", LoadGame);
         socket.On("loadTurnOrder", LoadTurnOrder);
         socket.On("declareTurn", DeclareTurn);
+        socket.On("diceRoll", DiceRolled);
     }
 
     public string GetSocket()
@@ -192,6 +193,22 @@ public class ServerManager : MonoBehaviour
     public void AdvanceTurn()
     {
         socket.Emit("advanceTurn");
+    }
+
+    public void RolledDice(int roll)
+    {
+        socket.Emit("diceRoll", new JSONObject(quote + roll.ToString() + quote));
+    }
+
+    void DiceRolled(SocketIOEvent evt)
+    {
+        int index = -1;
+        int.TryParse(evt.data.GetField("index").ToString().Trim('"'), out index);
+
+        int roll = -1;
+        int.TryParse(evt.data.GetField("roll").ToString().Trim('"'), out roll);
+
+        GameManager.inst?.PlayerMove(index, roll);
     }
 
     #endregion

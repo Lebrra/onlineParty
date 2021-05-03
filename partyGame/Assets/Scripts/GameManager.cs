@@ -38,6 +38,8 @@ public class GameManager : MonoBehaviour
         Debug.Log(rand);
         Dice.inst.PickRightNum(rand);
         Dice.inst.ResetDie();
+
+        ServerManager.server?.RolledDice(rand);
     }
 
     public void LoadPlayerUI(int thisPlayer, PlayerObject[] playerList)
@@ -86,6 +88,11 @@ public class GameManager : MonoBehaviour
         actionChoice.SetActive(false);
         foreach (Image a in uiObjects) a.color = normalColor;
         ServerManager.server?.AdvanceTurn();
+    }
+
+    public void PlayerMove(int index, int amount)
+    {
+        Debug.Log(players[index].username + " has rolled a " + amount);
     }
 }
 
