@@ -176,7 +176,7 @@ public class ServerManager : MonoBehaviour
         }
 
         foreach (PlayerObject p in players) Debug.Log(p.username);
-        GameManager.inst.LoadPlayerUI(myIndex, players);
+        GameManager.inst.LoadPlayerList(myIndex, players);
     }
 
     void DeclareTurn(SocketIOEvent evt)
@@ -208,7 +208,7 @@ public class ServerManager : MonoBehaviour
         int roll = -1;
         int.TryParse(evt.data.GetField("roll").ToString().Trim('"'), out roll);
 
-        GameManager.inst?.PlayerMove(index, roll);
+        GameManager.inst?.PlayerRoll(index, roll);
     }
 
     #endregion
