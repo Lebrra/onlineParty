@@ -61,11 +61,11 @@ public class GameManager : MonoBehaviour
 
     public void SetPlayerTurn(int turn)
     {
-        Debug.Log("it is " + players[turn].username + "'s turn!");
+        Debug.Log("it is " + players[turn].username + "'s turn! Index: " + turn);
 
         if (turn == myUser)
         {
-            Debug.LogWarning("its your turn!");
+            //Debug.LogWarning("its your turn!");
             myTurn = true;
             GameBoardConnector.inst?.EnableActions(true);
         }
@@ -86,6 +86,7 @@ public class GameManager : MonoBehaviour
 
     public void PlayerRoll(int index, int amount)
     {
+        Debug.Log("Index: " + index);
         Debug.Log(players[index].username + " has rolled a " + amount);
         GameBoardConnector.inst?.ShowDiceRoll(amount);
 

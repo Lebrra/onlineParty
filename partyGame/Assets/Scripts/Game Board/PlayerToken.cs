@@ -55,6 +55,7 @@ public class PlayerToken : MonoBehaviour
                 //transform.position = Vector2.Lerp(mySpace.GetComponent<BoardSpace>().pos1.transform.position, mySpace.GetComponent<BoardSpace>().nextSpace.GetComponent<BoardSpace>().pos1.transform.position, speed);
                 transform.position = mySpace.GetComponent<BoardSpace>().nextSpace.GetComponent<BoardSpace>().pos1.transform.position;
                 mySpace = mySpace.GetComponent<BoardSpace>().nextSpace;
+                transform.rotation = Quaternion.Euler(Vector3.up * mySpace.GetComponent<BoardSpace>().direction * 90);
                 return;
             case 2:
                 transform.position = mySpace.GetComponent<BoardSpace>().nextSpace.GetComponent<BoardSpace>().pos2.transform.position;

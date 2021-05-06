@@ -42,8 +42,9 @@ public class GameBoardConnector : MonoBehaviour
         {
             uiObjects[i].gameObject.SetActive(true);
             uiObjects[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = players[i].username;
+            playerTokens[i].gameObject.SetActive(true);
 
-            if (i == thisPlayer) uiObjects[thisPlayer].transform.GetChild(1).GetComponent<TextMeshProUGUI>().fontStyle = FontStyles.Bold;
+            if (i == thisPlayer) uiObjects[thisPlayer].transform.GetChild(2).gameObject.SetActive(true);
         }
     }
 
@@ -54,6 +55,9 @@ public class GameBoardConnector : MonoBehaviour
 
         turnText.transform.parent.gameObject.SetActive(true);
         turnText.text = GameManager.inst.players[player].username + "'s Turn";
+
+        Camera.main.transform.parent.position = playerTokens[player].transform.GetChild(1).transform.position;
+        Camera.main.transform.parent.rotation = Quaternion.Euler(Vector3.up * 90 * playerTokens[player].mySpace.GetComponent<BoardSpace>().direction);
     }
 
     public void EnableActions(bool buttons)
