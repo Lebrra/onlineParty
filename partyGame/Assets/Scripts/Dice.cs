@@ -38,17 +38,20 @@ public class Dice : MonoBehaviour
 
     public void ResetDie()
     {
-        StartCoroutine("DiceResetCountdown");
+        //StartCoroutine("DiceResetCountdown");
+        anim.SetTrigger("ResetDie");
+        dieScreen.SetActive(false);
+        rolling = false;
     }
 
     public IEnumerator DiceResetCountdown()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
         //dieScreen.SetActive(false);
         anim.SetTrigger("ResetDie");
         dieScreen.SetActive(false);
         rolling = false;
-        GameManager.inst.EndTurn();
+        //GameManager.inst.EndTurn();
     }
 
     

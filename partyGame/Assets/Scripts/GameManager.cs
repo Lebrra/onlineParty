@@ -76,10 +76,12 @@ public class GameManager : MonoBehaviour
 
     public void EndTurn()
     {
-        GameBoardConnector.inst?.EndTurn();
         if (myTurn)
+        {
+            myTurn = false;
             ServerManager.server?.AdvanceTurn();
-        myTurn = false;
+            Debug.LogWarning("turn advanced");
+        }
     }
 
     public void PlayerRoll(int index, int amount)
@@ -88,6 +90,7 @@ public class GameManager : MonoBehaviour
         GameBoardConnector.inst?.ShowDiceRoll(amount);
 
         // then maybe start corutine for movement?
+        StartCoroutine(GameBoardConnector.inst?.MovePlayer(2F, index, amount));
     }
 }
 
@@ -97,6 +100,8 @@ public struct PlayerObject
 {
     public string id;
     public string username;
+
+    public int currentSpace;
 
     //public GameObject myUI;
 }
