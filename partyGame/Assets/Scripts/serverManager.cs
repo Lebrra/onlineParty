@@ -172,7 +172,7 @@ public class ServerManager : MonoBehaviour
                 players[index].id = id;
                 players[index].username = username;
             }
-            if (socket.sid == id) myIndex = i;
+            if (socket.sid == id) myIndex = index;
         }
 
         foreach (PlayerObject p in players) Debug.Log(p.username);
