@@ -18,6 +18,7 @@ public class ClockWatcher : MonoBehaviour
         clock.text = startTime.ToString();
         StartCoroutine("StartClock", 3f);
         StartCoroutine("HideClock", 7f);
+        clock.color = new Color(0, 0, 0, 0);
     }
 
     // Update is called once per frame
