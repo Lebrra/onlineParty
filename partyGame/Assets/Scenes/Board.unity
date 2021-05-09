@@ -2662,6 +2662,40 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2228956a8cc69643ac00a3879e913e5, type: 3}
+--- !u!1 &535099601 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7814151003924712267, guid: d2228956a8cc69643ac00a3879e913e5, type: 3}
+  m_PrefabInstance: {fileID: 535099600}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &535099602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 535099601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da26b592f36d03541982c8f3f05448bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allMinigames:
+  - name: ButtonMasher
+    sceneIndex: 0
+    screenshot: {fileID: 0}
+  - name: BuzzerBeater
+    sceneIndex: 0
+    screenshot: {fileID: 0}
+  - name: DoodleJump
+    sceneIndex: 0
+    screenshot: {fileID: 0}
+  - name: ItemFall
+    sceneIndex: 0
+    screenshot: {fileID: 0}
+  - name: JumpEndurance
+    sceneIndex: 0
+    screenshot: {fileID: 0}
+  activeMinigames: []
 --- !u!1 &541165487
 GameObject:
   m_ObjectHideFlags: 0

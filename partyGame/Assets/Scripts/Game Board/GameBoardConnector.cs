@@ -84,6 +84,9 @@ public class GameBoardConnector : MonoBehaviour
     public void PlayMinigameAction()
     {
         Debug.Log("minigame time!");
+        if (!GameManager.inst.myTurn) return;
+
+        ServerManager.server?.MinigameSelect();
     }
 
     public void ShowDiceRoll(int value)

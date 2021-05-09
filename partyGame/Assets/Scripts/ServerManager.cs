@@ -47,6 +47,10 @@ public class ServerManager : MonoBehaviour
         socket.On("loadTurnOrder", LoadTurnOrder);
         socket.On("declareTurn", DeclareTurn);
         socket.On("diceRoll", DiceRolled);
+
+        // Minigames General
+        socket.On("minigamesList", LoadActiveMinigames);
+        socket.On("minigame", SelectedMinigame);
     }
 
     public string GetSocket()
@@ -209,6 +213,28 @@ public class ServerManager : MonoBehaviour
         int.TryParse(evt.data.GetField("roll").ToString().Trim('"'), out roll);
 
         GameManager.inst?.PlayerRoll(index, roll);
+    }
+
+    void LoadActiveMinigames(SocketIOEvent evt)
+    {
+        List<string> minigames = new List<string>();
+
+        for (int i = 0; i < evt.data.Count; i++)
+        {
+            Debug.Log(evt.data[i]);
+            minigames.Add(evt.data[i].ToString().Trim(quote));
+        }
+        GameManager.inst?.GetActiveMinigames(minigames);
+    }
+
+    public void MinigameSelect()
+    {
+        socket.Emit("minigameSelect");
+    }
+
+    void SelectedMinigame(SocketIOEvent evt)
+    {
+        Debug.Log(evt.data.ToString());
     }
 
     #endregion

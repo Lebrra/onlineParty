@@ -10,21 +10,22 @@ public class GameManager : MonoBehaviour
     //public GameObject actionChoice, diceScreen;
 
     public static GameManager inst;
+    MinigameManager myMM;
 
-    [Header("UI Things")]
+    [Header("Players")]
     public int myUser = -1;
     public PlayerObject[] players;
 
-    //public Image[] uiObjects;
+    [Header("Minigames")]
+    public string[] minigameActivePool;
+    [SerializeField]
+    public Dictionary<string, Sprite> minigameSprites;
 
-    //Color32 normalColor = new Color32(212, 212, 212, 255);
-    //Color32 turnColor = new Color32(103, 243, 127, 255);
-
-    // Start is called before the first frame update
     private void Awake()
     {
         if (inst) Destroy(this);
 
+        myMM = GetComponent<MinigameManager>();
         inst = this;
         DontDestroyOnLoad(gameObject);
     }
@@ -92,6 +93,12 @@ public class GameManager : MonoBehaviour
 
         // then maybe start corutine for movement?
         StartCoroutine(GameBoardConnector.inst?.MovePlayer(2F, index, amount));
+    }
+
+    public void GetActiveMinigames(List<string> minigames)
+    {
+        if (minigames.Count > 0) foreach (string s in minigames) myMM.AddActiveMinigame(s);
+        else Debug.Log("no minigames found.");
     }
 }
 
