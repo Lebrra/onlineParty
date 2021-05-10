@@ -16,11 +16,6 @@ public class GameManager : MonoBehaviour
     public int myUser = -1;
     public PlayerObject[] players;
 
-    [Header("Minigames")]
-    public string[] minigameActivePool;
-    [SerializeField]
-    public Dictionary<string, Sprite> minigameSprites;
-
     private void Awake()
     {
         if (inst) Destroy(this);
@@ -52,6 +47,9 @@ public class GameManager : MonoBehaviour
 
             players[i].id = playerList[i].id;
             players[i].username = playerList[i].username;
+
+            players[i].ready = false;
+            players[i].currentSpace = 0;
 
             Debug.Log("loaded player " + players[i].username);
         }
@@ -100,6 +98,17 @@ public class GameManager : MonoBehaviour
         if (minigames.Count > 0) foreach (string s in minigames) myMM.AddActiveMinigame(s);
         else Debug.Log("no minigames found.");
     }
+
+    public void GetSelectedMinigame(string minigame)
+    {
+        Debug.Log("selected minigame: " + minigame);
+        StartCoroutine(myMM?.GoToMinigame(minigame));
+    }
+
+    public void PreemptiveReady(int player)
+    {
+        players[player].ready = true;
+    }
 }
 
 
@@ -110,6 +119,5 @@ public struct PlayerObject
     public string username;
 
     public int currentSpace;
-
-    //public GameObject myUI;
+    public bool ready;
 }

@@ -51,6 +51,8 @@ public class ServerManager : MonoBehaviour
         // Minigames General
         socket.On("minigamesList", LoadActiveMinigames);
         socket.On("minigame", SelectedMinigame);
+        socket.On("setMinigameReady", SetPlayerReadyUI);
+        socket.On("startMinigame", StartMinigame);
     }
 
     public string GetSocket()
@@ -234,7 +236,23 @@ public class ServerManager : MonoBehaviour
 
     void SelectedMinigame(SocketIOEvent evt)
     {
-        Debug.Log(evt.data.ToString());
+        GameManager.inst?.GetSelectedMinigame(evt.data.GetField("minigame").ToString().Trim(quote));
+    }
+
+    void SetPlayerReadyUI(SocketIOEvent evt)
+    {
+        int player = -1;
+        if (int.TryParse(evt.data.GetField("player").ToString().Trim(quote), out player))
+        {
+            GameManager.inst?.PreemptiveReady(player);
+            MinigameLoader.gameInst?.SetPlayerReady(player);
+        }
+        else Debug.LogError("player index not found for minigame readycheck.");
+    }
+
+    void StartMinigame(SocketIOEvent evt)
+    {
+        MinigameLoader.gameInst?.StartGame();
     }
 
     #endregion

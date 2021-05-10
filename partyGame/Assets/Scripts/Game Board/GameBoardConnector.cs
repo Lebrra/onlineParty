@@ -34,6 +34,7 @@ public class GameBoardConnector : MonoBehaviour
             LoadPlayersUI(GameManager.inst.myUser, GameManager.inst.players);
 
         ServerManager.server?.SetReady();   // needed?
+        for (int i = 0; i < GameManager.inst.players.Length; i++) GameManager.inst.players[i].ready = false;
     }
 
     public void LoadPlayersUI(int thisPlayer, PlayerObject[] players)
@@ -79,6 +80,7 @@ public class GameBoardConnector : MonoBehaviour
         int rand = Random.Range(1, 4);
         Debug.Log("Rolled: " + rand);
         ServerManager.server?.RolledDice(rand);
+        DisableActions();
     }
 
     public void PlayMinigameAction()
@@ -87,6 +89,7 @@ public class GameBoardConnector : MonoBehaviour
         if (!GameManager.inst.myTurn) return;
 
         ServerManager.server?.MinigameSelect();
+        DisableActions();
     }
 
     public void ShowDiceRoll(int value)

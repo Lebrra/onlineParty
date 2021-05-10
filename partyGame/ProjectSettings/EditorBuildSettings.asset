@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Board.unity
     guid: 8ca8c115c8b17994a925c1067c0aff26
+  - enabled: 1
+    path: Assets/Scenes/ButtonMasher.unity
+    guid: dc3675c685ea8c34ea87082da15ed1be
   m_configObjects: {}

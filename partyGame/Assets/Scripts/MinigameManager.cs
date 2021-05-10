@@ -16,26 +16,48 @@ public class MinigameManager : MonoBehaviour
         ResetActivePool();
     }
 
-    public void AddActiveMinigame(string gameName)
+    Minigame GetMinigameFromString(string gameName)
     {
-        foreach(Minigame m in allMinigames)
+        foreach (Minigame m in allMinigames)
         {
-            if(m.name == gameName)
+            if (m.name == gameName)
             {
-                // game found
-                if (activeMinigames.Contains(m)) Debug.Log("game is already in active games...");
-                else activeMinigames.Add(m);
-
-                return;
+                return m;
             }
         }
+        Debug.LogError("minigame not found. " + gameName);
+        Minigame error = new Minigame();
+        error.sceneIndex = -1;
+        return error;
+    }
 
-        Debug.LogWarning("minigame " + gameName + " not found.");
+    public void AddActiveMinigame(string gameName)
+    {
+        Minigame tempData = GetMinigameFromString(gameName);
+
+        if (activeMinigames.Contains(tempData)) Debug.Log("game is already in active games...");
+        else if (tempData.sceneIndex > 0) activeMinigames.Add(tempData);
+        else Debug.LogWarning("error adding game " + gameName);
     }
 
     public void ResetActivePool()
     {
         activeMinigames = new List<Minigame>();
+    }
+
+    public IEnumerator GoToMinigame(string minigame)
+    {
+        Minigame currentGame = GetMinigameFromString(minigame);
+        if (currentGame.sceneIndex < 1)
+        {
+            Debug.LogError("unable to load minigame " + minigame);
+            yield break;
+        }
+
+        yield return new WaitForSeconds(2);
+
+        //SceneManager.LoadScene(currentGame.sceneIndex);
+        SceneManager.LoadScene(2);      //TEMP UNTIL ALL MINIGAMES FUNCTION
     }
 }
 
