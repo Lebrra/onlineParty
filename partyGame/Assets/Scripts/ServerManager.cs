@@ -16,8 +16,6 @@ public class ServerManager : MonoBehaviour
 
     SocketIOComponent socket;
 
-    char quote = '"';
-
     private void Awake()
     {
         if (server) Destroy(gameObject);
@@ -53,6 +51,7 @@ public class ServerManager : MonoBehaviour
         socket.On("minigame", SelectedMinigame);
         socket.On("setMinigameReady", SetPlayerReadyUI);
         socket.On("startMinigame", StartMinigame);
+        socket.On("receiveMinigameData", ReceiveMinigameData);
     }
 
     public string GetSocket()
@@ -90,7 +89,7 @@ public class ServerManager : MonoBehaviour
 
     public void ChangeUsername(string name)
     {
-        socket.Emit("updateUsername", new JSONObject(quote + name + quote));
+        socket.Emit("updateUsername", new JSONObject(Quote.quote + name + Quote.quote));
     }
 
     public void CreateNewLobby()
@@ -100,7 +99,7 @@ public class ServerManager : MonoBehaviour
 
     public void JoinRoom(string roomName)
     {
-        socket.Emit("joinRoom", new JSONObject(quote + roomName + quote));
+        socket.Emit("joinRoom", new JSONObject(Quote.quote + roomName + Quote.quote));
     }
 
     public void LeaveRoom()
@@ -203,7 +202,7 @@ public class ServerManager : MonoBehaviour
 
     public void RolledDice(int roll)
     {
-        socket.Emit("diceRoll", new JSONObject(quote + roll.ToString() + quote));
+        socket.Emit("diceRoll", new JSONObject(Quote.quote + roll.ToString() + Quote.quote));
     }
 
     void DiceRolled(SocketIOEvent evt)
@@ -224,7 +223,7 @@ public class ServerManager : MonoBehaviour
         for (int i = 0; i < evt.data.Count; i++)
         {
             Debug.Log(evt.data[i]);
-            minigames.Add(evt.data[i].ToString().Trim(quote));
+            minigames.Add(evt.data[i].ToString().Trim(Quote.quote));
         }
         GameManager.inst?.GetActiveMinigames(minigames);
     }
@@ -236,13 +235,13 @@ public class ServerManager : MonoBehaviour
 
     void SelectedMinigame(SocketIOEvent evt)
     {
-        GameManager.inst?.GetSelectedMinigame(evt.data.GetField("minigame").ToString().Trim(quote));
+        GameManager.inst?.GetSelectedMinigame(evt.data.GetField("minigame").ToString().Trim(Quote.quote));
     }
 
     void SetPlayerReadyUI(SocketIOEvent evt)
     {
         int player = -1;
-        if (int.TryParse(evt.data.GetField("player").ToString().Trim(quote), out player))
+        if (int.TryParse(evt.data.GetField("player").ToString().Trim(Quote.quote), out player))
         {
             GameManager.inst?.PreemptiveReady(player);
             MinigameLoader.gameInst?.SetPlayerReady(player);
@@ -255,5 +254,20 @@ public class ServerManager : MonoBehaviour
         MinigameLoader.gameInst?.StartGame();
     }
 
+    public void SendMinigameData(string data)
+    {
+        socket.Emit("sendMinigameData", new JSONObject(Quote.quote + data + Quote.quote));
+    }
+
+    void ReceiveMinigameData(SocketIOEvent evt)
+    {
+        MinigameLoader.gameInst?.ReceiveGameData(evt.data);
+    }
+
     #endregion
+}
+
+public static class Quote
+{
+    public const char quote = '"';
 }

@@ -69,4 +69,13 @@ public class MinigameLoader : MonoBehaviour
         Debug.Log("start minigame!");
         howToPlayPanel.SetActive(false);
     }
+
+    public virtual void ReceiveGameData(JSONObject data)
+    {
+        // depending on the game, this could be an int, float, bool
+        int playerIndex = -1;
+        if (int.TryParse(data.GetField("player").ToString().Trim(Quote.quote), out playerIndex))
+            Debug.Log("Game data received: " + data.GetField("data").ToString());
+        else Debug.LogError("player index invalid.", gameObject);
+    }
 }
