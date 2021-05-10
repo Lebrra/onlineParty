@@ -2615,10 +2615,10 @@ MonoBehaviour:
     sceneIndex: 4
     screenshot: {fileID: 0}
   - name: ItemFall
-    sceneIndex: 0
+    sceneIndex: 5
     screenshot: {fileID: 0}
   - name: JumpEndurance
-    sceneIndex: 5
+    sceneIndex: 6
     screenshot: {fileID: 0}
   activeMinigames: []
 --- !u!1 &541165487
