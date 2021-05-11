@@ -53,6 +53,7 @@ public class ServerManager : MonoBehaviour
         socket.On("startMinigame", StartMinigame);
         socket.On("receiveMinigameData", ReceiveMinigameData);
         socket.On("minigameResult", MinigameWinner);
+        socket.On("winnerRoll", MinigameReward);
     }
 
     public string GetSocket()
@@ -270,6 +271,20 @@ public class ServerManager : MonoBehaviour
         int winner = -1;
         if (int.TryParse(evt.data.GetField("winner").ToString().Trim(Quote.quote), out winner))
             MinigameLoader.gameInst?.GetWinner(winner);
+    }
+
+    void MinigameReward(SocketIOEvent evt)
+    {
+        int index = -1;
+        int.TryParse(evt.data.GetField("index").ToString().Trim('"'), out index);
+
+        int roll = -1;
+        int.TryParse(evt.data.GetField("roll").ToString().Trim('"'), out roll);
+
+        GameBoardConnector.inst?.SetCameraPos(index);
+        GameBoardConnector.inst?.SetRewardsText(index);
+
+        GameManager.inst?.PlayerRoll(index, roll);
     }
 
     #endregion

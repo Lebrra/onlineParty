@@ -78,6 +78,11 @@ public class GameBoardConnector : MonoBehaviour
         turnText.transform.parent.gameObject.SetActive(true);
         turnText.text = GameManager.inst.players[player].username + "'s Turn";
 
+        SetCameraPos(player);
+    }
+
+    public void SetCameraPos(int player)
+    {
         Camera.main.transform.parent.position = playerTokens[player].transform.GetChild(1).transform.position;
         Camera.main.transform.parent.rotation = Quaternion.Euler(Vector3.up * 90 * playerTokens[player].mySpace.GetComponent<BoardSpace>().direction);
     }
@@ -160,5 +165,11 @@ public class GameBoardConnector : MonoBehaviour
         {
             playerTokens[i].SetMyLocation(allSpaces[GameManager.inst.players[i].currentSpace]);
         }
+    }
+
+    public void SetRewardsText(int player)
+    {
+        turnText.transform.parent.gameObject.SetActive(true);
+        turnText.text = GameManager.inst.players[player].username + "'s Winning Roll!";
     }
 }

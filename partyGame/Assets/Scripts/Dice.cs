@@ -71,6 +71,8 @@ public class Dice : MonoBehaviour
             case 3:
                 anim.SetTrigger("Roll3");
                 break;
+            default:
+                break;
         }
     }
     
