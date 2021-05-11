@@ -34,7 +34,7 @@ public class PlayerToken : MonoBehaviour
         }*/
     }
 
-    void Update()
+    /*void Update()
     {
         //TESTING
         if (Input.GetKeyDown(KeyCode.Space) && mySpace.GetComponent<BoardSpace>().nextSpace != null)
@@ -43,12 +43,18 @@ public class PlayerToken : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Backspace) && mySpace.GetComponent<BoardSpace>().prevSpace != null)
             RetreatSpace();
         
-    }
+    }*/
 
     //Move forward to the next avalible space
     public void AdvanceSpace()
     {
         //speed += 1.1f * Time.deltaTime;
+
+        if (!mySpace.GetComponent<BoardSpace>())
+        {
+            Debug.LogWarning("player has won already, I cannot move any more!");
+            return;
+        }
 
         switch (myPlayerNum)
         {

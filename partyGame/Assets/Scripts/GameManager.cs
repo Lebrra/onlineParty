@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     public bool initialLoad = false;
 
     public bool myTurn;
-    //public GameObject actionChoice, diceScreen;
+    public bool gameOver = false;
 
     public static GameManager inst;
     MinigameManager myMM;
@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
 
     public void EndTurn()
     {
-        if (myTurn)
+        if (myTurn && !gameOver)
         {
             myTurn = false;
             ServerManager.server?.AdvanceTurn();
@@ -109,6 +109,16 @@ public class GameManager : MonoBehaviour
     public void PreemptiveReady(int player)
     {
         players[player].ready = true;
+    }
+
+    public void CheckForWin(int player)
+    {
+        if(players[player].currentSpace > 32)
+        {
+            Debug.Log(players[player].username + " has won!");
+            gameOver = true;
+            GameBoardConnector.inst?.ShowEndScreen(players[player].username);
+        }
     }
 }
 
