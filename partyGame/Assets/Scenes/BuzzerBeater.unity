@@ -310,7 +310,7 @@ PrefabInstance:
     - target: {fileID: 1878695969292577526, guid: ef5f92a8ccee6fd45b1c19caad11a405, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 887371029}
+      objectReference: {fileID: 319462888}
     - target: {fileID: 1878695969292577526, guid: ef5f92a8ccee6fd45b1c19caad11a405, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SendReady
@@ -683,7 +683,7 @@ MonoBehaviour:
   - {fileID: 553209591}
   - {fileID: 128003077}
   - {fileID: 1510224290}
-  defaultScore: 
+  defaultScore: 0
   winnerText: {fileID: 1838727634}
   endPanel: {fileID: 1715379104}
   minigameState: 0
@@ -2456,6 +2456,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1386185292}
     m_Modifications:
+    - target: {fileID: 3316446082019287224, guid: 89c1f60cb603fe440b382ab09d30222a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 319462888}
+    - target: {fileID: 3316446082019287224, guid: 89c1f60cb603fe440b382ab09d30222a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ReturnReadyCheck
+      objectReference: {fileID: 0}
     - target: {fileID: 3316446082019287225, guid: 89c1f60cb603fe440b382ab09d30222a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

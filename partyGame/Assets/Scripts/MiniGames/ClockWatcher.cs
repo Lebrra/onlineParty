@@ -53,7 +53,9 @@ public class ClockWatcher : MinigameLoader
         minigameState = false;
         //clock.color = new Color(255, 255, 255, 255);
         myTime = startTime;
-        ServerManager.server?.SendMinigameData(myTime.ToString());
+        myTime = (float)System.Math.Round(myTime, 3);
+        float sendTime = -Mathf.Abs(myTime);
+        SendFinalScore(sendTime.ToString());
     }
 
     public IEnumerator StartClock(float delay)
