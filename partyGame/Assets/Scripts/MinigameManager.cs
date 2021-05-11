@@ -56,8 +56,8 @@ public class MinigameManager : MonoBehaviour
 
         yield return new WaitForSeconds(2);
 
-        //SceneManager.LoadScene(currentGame.sceneIndex);
-        SceneManager.LoadScene(3);      //TEMP UNTIL ALL MINIGAMES FUNCTION
+        SceneManager.LoadScene(currentGame.sceneIndex);
+        //SceneManager.LoadScene(3);      //TEMP UNTIL ALL MINIGAMES FUNCTION
     }
 }
 
