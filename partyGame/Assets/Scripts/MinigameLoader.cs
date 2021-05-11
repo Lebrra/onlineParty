@@ -13,6 +13,10 @@ public class MinigameLoader : MonoBehaviour
     public GameObject[] playerReadyUI;  // children: 0 = fill, 1 = check, 2 = name, 3 = me
     public Button readyBtn;
 
+    [Header("Game UI")]
+    public GameObject[] playerScoreContainers;
+    public string defaultScore = "";
+
     protected void Awake()
     {
         if (gameInst) Destroy(gameInst);
@@ -43,8 +47,18 @@ public class MinigameLoader : MonoBehaviour
                 playerReadyUI[i].transform.GetChild(2).GetComponent<TMPro.TextMeshProUGUI>().text = players[i].username;
                 if (i == me) playerReadyUI[i].transform.GetChild(3).gameObject.SetActive(true);
                 if (players[i].ready) playerReadyUI[i].transform.GetChild(1).gameObject.SetActive(true);
+
+                playerScoreContainers[i].SetActive(true);
+                string extraText = "";
+                if (defaultScore != "") extraText = "<#AAA>:</color>";
+                playerScoreContainers[i].transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = players[i].username + extraText;
+                playerScoreContainers[i].transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = defaultScore;
             }
-            else playerReadyUI[i].SetActive(false);
+            else
+            {
+                playerReadyUI[i].SetActive(false);
+                playerScoreContainers[i].SetActive(false);
+            }
         }
     }
 
@@ -62,6 +76,7 @@ public class MinigameLoader : MonoBehaviour
     protected virtual void LoadGameUI(int me, PlayerObject[] players)
     {
         Debug.Log("loading ui for minigame...");
+
     }
 
     public virtual void StartGame()
