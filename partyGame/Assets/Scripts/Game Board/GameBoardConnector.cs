@@ -32,7 +32,7 @@ public class GameBoardConnector : MonoBehaviour
     {
         diceScreen.SetActive(false);
 
-        if (GameManager.inst.initialLoad)
+        //if (!GameManager.inst.initialLoad)
             LoadPlayersUI(GameManager.inst.myUser, GameManager.inst.players);
 
         ServerManager.server?.SetReady();   // needed?

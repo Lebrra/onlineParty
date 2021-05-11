@@ -113,6 +113,8 @@ public class MinigameLoader : MonoBehaviour
 
     public void GetWinner(int index)
     {
+        winnerText.gameObject.SetActive(true);
+
         if (index < 0)
         {
             Debug.Log("Nobody won!");
@@ -133,7 +135,7 @@ public class MinigameLoader : MonoBehaviour
 
     IEnumerator EnableEndBtn()
     {
-        yield return new WaitForSeconds(1F);
+        yield return new WaitForSeconds(3F);
         endPanel.SetActive(true);
     }
 
@@ -141,7 +143,7 @@ public class MinigameLoader : MonoBehaviour
     {
         ServerManager.server?.SetReady();
         endPanel.GetComponent<Button>().enabled = false;
-        endPanel.GetComponent<Image>().color = new Color32(0, 0, 0, 70);
+        endPanel.GetComponent<Image>().color = new Color32(0, 0, 0, 100);
 
         GameObject temp = endPanel.transform.GetChild(0).gameObject;
         temp.GetComponent<LoadingAnim>().enabled = false;

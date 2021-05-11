@@ -799,7 +799,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &535036300
 RectTransform:
   m_ObjectHideFlags: 0
@@ -863,13 +863,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 840688331}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 840688334}
+        m_TargetAssemblyTypeName: MinigameLoader, Assembly-CSharp
+        m_MethodName: ReturnReadyCheck
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1144,8 +1144,8 @@ MonoBehaviour:
   - {fileID: 1755290378}
   - {fileID: 1886113159}
   defaultScore: 0
-  winnerText: {fileID: 0}
-  endPanel: {fileID: 0}
+  winnerText: {fileID: 1629060634}
+  endPanel: {fileID: 535036299}
   minigameState: 0
   presses: 0
   timeRemaining: 10
@@ -3574,7 +3574,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1629060633
 RectTransform:
   m_ObjectHideFlags: 0
