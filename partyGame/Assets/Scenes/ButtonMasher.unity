@@ -4344,7 +4344,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1878695968428803239, guid: ef5f92a8ccee6fd45b1c19caad11a405, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1878695968807472155, guid: ef5f92a8ccee6fd45b1c19caad11a405, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -4354,6 +4354,48 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1951417765}
+    - target: {fileID: 1878695969328896834, guid: ef5f92a8ccee6fd45b1c19caad11a405, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1878695969328896834, guid: ef5f92a8ccee6fd45b1c19caad11a405, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1878695969328896834, guid: ef5f92a8ccee6fd45b1c19caad11a405, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1878695969328896834, guid: ef5f92a8ccee6fd45b1c19caad11a405, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4278190080
+      objectReference: {fileID: 0}
+    - target: {fileID: 1878695970258239041, guid: ef5f92a8ccee6fd45b1c19caad11a405, type: 3}
+      propertyPath: m_text
+      value: 'In this game you will be given 10 seconds to press the button as many
+        times as you can!
+
+
+        <b>Controls:</b>
+
+        -Space'
+      objectReference: {fileID: 0}
+    - target: {fileID: 1878695970258239041, guid: ef5f92a8ccee6fd45b1c19caad11a405, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1878695970258239041, guid: ef5f92a8ccee6fd45b1c19caad11a405, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1878695970258239041, guid: ef5f92a8ccee6fd45b1c19caad11a405, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1878695970258239041, guid: ef5f92a8ccee6fd45b1c19caad11a405, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4278190080
+      objectReference: {fileID: 0}
     - target: {fileID: 3977586463610567504, guid: ef5f92a8ccee6fd45b1c19caad11a405, type: 3}
       propertyPath: m_IsActive
       value: 0

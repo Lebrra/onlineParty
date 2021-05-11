@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DoodleJumpManager : MonoBehaviour
+public class DoodleJumpManager : MinigameLoader
 {
     public Transform target;
     public float totalDist = 0f;
 
-    // Start is called before the first frame update
-    void Start()
+    public override void StartGame()
     {
-        
+        base.StartGame();
+        target.GetComponent<DoodleJumpControles>().dead = false;
     }
 
     // Update is called once per frame
