@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class MinigameLoader : MonoBehaviour
 {
@@ -16,6 +17,13 @@ public class MinigameLoader : MonoBehaviour
     [Header("Game UI")]
     public GameObject[] playerScoreContainers;
     public string defaultScore = "";
+
+    [Header("End Game")]
+    public TextMeshProUGUI winnerText;
+    public GameObject endPanel;
+
+    [Header("Minigame Properties")]
+    public bool minigameState = false;
 
     protected void Awake()
     {
@@ -44,15 +52,15 @@ public class MinigameLoader : MonoBehaviour
             if (i < players.Length)
             {
                 playerReadyUI[i].SetActive(true);
-                playerReadyUI[i].transform.GetChild(2).GetComponent<TMPro.TextMeshProUGUI>().text = players[i].username;
+                playerReadyUI[i].transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = players[i].username;
                 if (i == me) playerReadyUI[i].transform.GetChild(3).gameObject.SetActive(true);
                 if (players[i].ready) playerReadyUI[i].transform.GetChild(1).gameObject.SetActive(true);
 
                 playerScoreContainers[i].SetActive(true);
                 string extraText = "";
                 if (defaultScore != "") extraText = "<#AAA>:</color>";
-                playerScoreContainers[i].transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = players[i].username + extraText;
-                playerScoreContainers[i].transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = defaultScore;
+                playerScoreContainers[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = players[i].username + extraText;
+                playerScoreContainers[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = defaultScore;
             }
             else
             {
@@ -95,5 +103,49 @@ public class MinigameLoader : MonoBehaviour
             playerScoreContainers[playerIndex].transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = data.GetField("data").ToString().Trim(Quote.quote);
         }
         else Debug.LogError("player index invalid.", gameObject);
+    }
+
+    public void SendFinalScore(string score)
+    {
+        ServerManager.server?.SendMinigameData(score);
+        ServerManager.server?.SetReady();
+    }
+
+    public void GetWinner(int index)
+    {
+        if (index < 0)
+        {
+            Debug.Log("Nobody won!");
+            winnerText.text = "Nobody won...";
+        }
+        else
+        {
+            Debug.Log(GameManager.inst.players[index].username + " has won the minigame!");
+            string playerColor = "<#" + ColorUtility.ToHtmlStringRGB(playerScoreContainers[index].transform.GetChild(0).GetComponent<TextMeshProUGUI>().color) + ">";
+            winnerText.text = playerColor + GameManager.inst?.players[index].username + "</color> has won!";
+
+            playerScoreContainers[index].transform.GetChild(2).gameObject.SetActive(true);
+        }
+
+        // start coroutine to enable readycheck screen
+        StartCoroutine(EnableEndBtn());
+    }
+
+    IEnumerator EnableEndBtn()
+    {
+        yield return new WaitForSeconds(1F);
+        endPanel.SetActive(true);
+    }
+
+    public void ReturnReadyCheck()
+    {
+        ServerManager.server?.SetReady();
+        endPanel.GetComponent<Button>().enabled = false;
+        endPanel.GetComponent<Image>().color = new Color32(0, 0, 0, 70);
+
+        GameObject temp = endPanel.transform.GetChild(0).gameObject;
+        temp.GetComponent<LoadingAnim>().enabled = false;
+        temp.GetComponent<TextMeshProUGUI>().text = "Waiting for players";
+        temp.GetComponent<LoadingAnim>().enabled = true;
     }
 }

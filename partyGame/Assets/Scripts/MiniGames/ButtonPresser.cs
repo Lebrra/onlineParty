@@ -8,7 +8,6 @@ public class ButtonPresser : MinigameLoader
     Animator anim;
     public int presses = 0;
     public float timeRemaining = 10f;
-    public bool gameState = false;
     public TextMeshProUGUI pressCount;
 
     new void Start()
@@ -22,28 +21,31 @@ public class ButtonPresser : MinigameLoader
     {
         yield return new WaitForSeconds(delay);
         ServerManager.server?.SendMinigameData(presses.ToString());
+        if (minigameState) StartCoroutine(SendToServer(delay));
     }
 
     public override void StartGame()
     {
         base.StartGame();
-        gameState = true;
+        StartCoroutine(SendToServer(1f));
+        minigameState = true;
     }
 
     void Update()
     {
-        if(timeRemaining <= 0f)
+        if (minigameState == true)
         {
-            gameState = false;
-            pressCount.text = presses.ToString() + " Button presses.";
-        }
+            if (timeRemaining <= 0f)
+            {
+                minigameState = false;
+                pressCount.text = presses.ToString() + " Button presses.";
+                SendFinalScore(presses.ToString());
+            }
 
-        if (gameState == true)
-        {
             timeRemaining -= Time.deltaTime;
             pressCount.text = System.Math.Round(timeRemaining, 1).ToString();
 
-            StartCoroutine(SendToServer(2f));
+            //StartCoroutine(SendToServer(2f));
 
             if (Input.GetKeyDown(KeyCode.Space))
             {

@@ -41,7 +41,7 @@ public class ServerManager : MonoBehaviour
         socket.On("ping", Ping);
 
         // Game Functions
-        socket.On("loadGame", LoadGame);
+        socket.On("loadGame", LoadBoardScene);
         socket.On("loadTurnOrder", LoadTurnOrder);
         socket.On("declareTurn", DeclareTurn);
         socket.On("diceRoll", DiceRolled);
@@ -52,6 +52,7 @@ public class ServerManager : MonoBehaviour
         socket.On("setMinigameReady", SetPlayerReadyUI);
         socket.On("startMinigame", StartMinigame);
         socket.On("receiveMinigameData", ReceiveMinigameData);
+        socket.On("minigameResult", MinigameWinner);
     }
 
     public string GetSocket()
@@ -140,7 +141,7 @@ public class ServerManager : MonoBehaviour
         socket.Emit("startGame");
     }
 
-    void LoadGame(SocketIOEvent evt)
+    void LoadBoardScene(SocketIOEvent evt)
     {
         Debug.Log("The game has been started!");
         UnityEngine.SceneManagement.SceneManager.LoadScene(1);
@@ -262,6 +263,13 @@ public class ServerManager : MonoBehaviour
     void ReceiveMinigameData(SocketIOEvent evt)
     {
         MinigameLoader.gameInst?.ReceiveGameData(evt.data);
+    }
+
+    void MinigameWinner(SocketIOEvent evt)
+    {
+        int winner = -1;
+        if (int.TryParse(evt.data.GetField("winner").ToString().Trim(Quote.quote), out winner))
+            MinigameLoader.gameInst?.GetWinner(winner);
     }
 
     #endregion
