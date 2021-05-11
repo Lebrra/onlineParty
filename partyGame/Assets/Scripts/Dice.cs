@@ -71,6 +71,15 @@ public class Dice : MonoBehaviour
             case 3:
                 anim.SetTrigger("Roll3");
                 break;
+            case 4:
+                anim.SetTrigger("Roll4");
+                break;
+            case 5:
+                anim.SetTrigger("Roll5");
+                break;
+            case 6:
+                anim.SetTrigger("Roll6");
+                break;
             default:
                 break;
         }
