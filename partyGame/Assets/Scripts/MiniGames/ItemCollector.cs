@@ -8,7 +8,6 @@ public class ItemCollector : MonoBehaviour
     public int itemsCollected = 0;
     public int badItemsCollected = 0;
     public static ItemCollector inst;
-    public GameObject scorePanel;
     public TextMeshProUGUI scoreText;
 
     private void Start()
@@ -35,11 +34,6 @@ public class ItemCollector : MonoBehaviour
 
     private void Update()
     {
-        scoreText.text = "Final Score: " + itemsCollected.ToString();
-    }
-
-    public void DisplayScore()
-    {
-        scorePanel.SetActive(true);
+        //scoreText.text = "Final Score: " + itemsCollected.ToString();
     }
 }

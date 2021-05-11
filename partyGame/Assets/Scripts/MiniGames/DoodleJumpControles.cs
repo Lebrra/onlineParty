@@ -7,6 +7,7 @@ public class DoodleJumpControles : MonoBehaviour
     Rigidbody rb;
     Collider c;
 
+    public bool dead = false;
     public float moveSpeed;
     float movement = 0f;
 
@@ -23,24 +24,25 @@ public class DoodleJumpControles : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 vel = rb.velocity;
-        vel.x = movement;
-        rb.velocity = vel;
+        if (!dead)
+        {
+            rb.isKinematic = false;
+            Vector3 vel = rb.velocity;
+            vel.x = movement;
+            rb.velocity = vel;
+        }
+        else
+        {
+            rb.isKinematic = true;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Platform"))
+        if (other.gameObject.CompareTag("MainCamera"))
         {
-            Physics.IgnoreCollision(c, other);
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("Platform"))
-        {
-            Physics.IgnoreCollision(c, other, false);
+            dead = true;
+            CameraFollow.inst.StartCam = false;
         }
     }
 }

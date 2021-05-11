@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemFallSpawner : MonoBehaviour
+public class ItemFallSpawner : MinigameLoader
 {
     public Transform spawn;
     public GameObject goodItem, badItem;
@@ -11,31 +11,48 @@ public class ItemFallSpawner : MonoBehaviour
     public float gameDuration = 15f;
     public bool gameState = false;
 
-    void Start()
+    public override void StartGame()
     {
-        gameState = true;
+        base.StartGame();
         StartCoroutine("DropTime", 3);
+        StartCoroutine(SendToServer(1f));
+        minigameState = true;
     }
 
     void Update()
     {
-        gameDuration -= Time.deltaTime;
-        if (gameDuration < 0)
-            gameState = false;
-
-        if (!gameState)
+        if (minigameState)
         {
-            ItemCollector.inst.DisplayScore();
-            StopCoroutine("DropTime");
-            ItemCollector.inst.GetComponent<DoodleJumpControles>().enabled = false;
+            ItemCollector.inst.GetComponent<DoodleJumpControles>().dead = false;
+            gameDuration -= Time.deltaTime;
+
+            if (gameDuration < 0)
+                minigameState = false;
+        }
+        else if (!minigameState)
+        {
+            //StopCoroutine("DropTime");
+            //ItemCollector.inst.GetComponent<DoodleJumpControles>().enabled = false;
+            ItemCollector.inst.GetComponent<DoodleJumpControles>().dead = true;
         }
     }
 
     public IEnumerator DropTime(float delay)
     {
         yield return new WaitForSeconds(delay);
-        DropItem(difficulty);
+
+        if (minigameState)
+        {
+            DropItem(difficulty);
+        }
         StartCoroutine("DropTime", 1.5);
+    }
+
+    public IEnumerator SendToServer(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        ServerManager.server?.SendMinigameData(ItemCollector.inst.itemsCollected.ToString());
+        if (minigameState) StartCoroutine(SendToServer(delay));
     }
 
     public void DropItem(int level)

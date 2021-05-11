@@ -5,13 +5,26 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     public Transform target;
-    public float smoothSpeed;
+    public bool StartCam = false;
+    public static CameraFollow inst;
+
+    private void Start()
+    {
+        inst = this;
+    }
+
+    /*
+    public IEnumerator MoveCamera()
+    {
+
+    }
+    */
 
     private void LateUpdate()
     {
-        if(target.position.y > transform.position.y)
+        if(StartCam)
         {
-            Vector3 newPos = new Vector3(transform.position.x, target.position.y, transform.position.z);
+            Vector3 newPos = new Vector3(transform.position.x, transform.position.y + .003f, transform.position.z);
             transform.position = newPos;
         }
     }
