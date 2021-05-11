@@ -163,6 +163,7 @@ public class GameBoardConnector : MonoBehaviour
     {
         for(int i = 0; i < GameManager.inst.players.Length; i++)
         {
+            Debug.Log("setting player location: " + GameManager.inst.players[i].username + " at index " + GameManager.inst.players[i].currentSpace);
             playerTokens[i].SetMyLocation(allSpaces[GameManager.inst.players[i].currentSpace]);
         }
     }

@@ -10,6 +10,7 @@ public class PlayerToken : MonoBehaviour
 
     void Start()
     {
+        /*
         switch (myPlayerNum)
         {
             case 1:
@@ -30,7 +31,7 @@ public class PlayerToken : MonoBehaviour
                 return;
             default:
                 return;
-        }
+        }*/
     }
 
     void Update()

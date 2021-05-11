@@ -1154,7 +1154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myPlayerNum: 1
   startSpace: {fileID: 558880178}
-  mySpace: {fileID: 0}
+  mySpace: {fileID: 558880178}
 --- !u!4 &314884863
 Transform:
   m_ObjectHideFlags: 0
@@ -2351,7 +2351,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myPlayerNum: 1
   startSpace: {fileID: 558880178}
-  mySpace: {fileID: 0}
+  mySpace: {fileID: 558880178}
 --- !u!4 &503775465
 Transform:
   m_ObjectHideFlags: 0
@@ -3186,7 +3186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myPlayerNum: 1
   startSpace: {fileID: 558880178}
-  mySpace: {fileID: 0}
+  mySpace: {fileID: 558880178}
 --- !u!4 &658371701
 Transform:
   m_ObjectHideFlags: 0
@@ -5713,7 +5713,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myPlayerNum: 1
   startSpace: {fileID: 558880178}
-  mySpace: {fileID: 0}
+  mySpace: {fileID: 558880178}
 --- !u!4 &1023088528
 Transform:
   m_ObjectHideFlags: 0
@@ -6299,7 +6299,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myPlayerNum: 1
   startSpace: {fileID: 558880178}
-  mySpace: {fileID: 0}
+  mySpace: {fileID: 558880178}
 --- !u!4 &1122268728
 Transform:
   m_ObjectHideFlags: 0
@@ -7829,7 +7829,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myPlayerNum: 1
   startSpace: {fileID: 558880178}
-  mySpace: {fileID: 0}
+  mySpace: {fileID: 558880178}
 --- !u!4 &1413125580
 Transform:
   m_ObjectHideFlags: 0
