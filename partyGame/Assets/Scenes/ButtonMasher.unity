@@ -765,9 +765,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d37cb23f66c93f4da1ca958dfac2cd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  howToPlayPanel: {fileID: 0}
+  playerReadyUI: []
+  readyBtn: {fileID: 0}
+  playerScoreContainers: []
+  defaultScore: 
   presses: 0
   timeRemaining: 10
-  gameState: 1
+  gameState: 0
   pressCount: {fileID: 1042942619}
 --- !u!1 &977741037
 GameObject:
@@ -3147,7 +3152,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -0.000061035156, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 551.36896, y: 475.53442}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2047043551
@@ -3541,6 +3546,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1878695968428803239, guid: ef5f92a8ccee6fd45b1c19caad11a405, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1878695968807472155, guid: ef5f92a8ccee6fd45b1c19caad11a405, type: 3}
+      propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1878695969292577526, guid: ef5f92a8ccee6fd45b1c19caad11a405, type: 3}
