@@ -34,6 +34,7 @@ public class ButtonPresser : MonoBehaviour
             {
                 anim.SetTrigger("ButtonPress");
                 presses++;
+                //ServerManager.server?.SendMinigameData(presses.ToString());
             }
         }
     }

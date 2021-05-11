@@ -90,7 +90,10 @@ public class MinigameLoader : MonoBehaviour
         // depending on the game, this could be an int, float, bool
         int playerIndex = -1;
         if (int.TryParse(data.GetField("player").ToString().Trim(Quote.quote), out playerIndex))
+        {
             Debug.Log("Game data received: " + data.GetField("data").ToString());
+            playerScoreContainers[playerIndex].transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = data.GetField("data").ToString().Trim(Quote.quote);
+        }
         else Debug.LogError("player index invalid.", gameObject);
     }
 }
