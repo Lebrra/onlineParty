@@ -18,10 +18,10 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (inst) Destroy(this);
+        if (inst) Destroy(gameObject);
+        else inst = this;
 
         myMM = GetComponent<MinigameManager>();
-        inst = this;
         DontDestroyOnLoad(gameObject);
     }
 
@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("loaded player " + players[i].username);
         }
 
-        GameBoardConnector.inst?.LoadPlayersUI(thisPlayer, playerList);
+        GameBoardConnector.inst?.LoadPlayersUI(myUser, players);
         initialLoad = true;
     }
 

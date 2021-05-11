@@ -32,23 +32,42 @@ public class GameBoardConnector : MonoBehaviour
     {
         diceScreen.SetActive(false);
 
-        //if (!GameManager.inst.initialLoad)
-            LoadPlayersUI(GameManager.inst.myUser, GameManager.inst.players);
+        StartCoroutine(LookForBoardData());
+    }
 
-        ServerManager.server?.SetReady();   // needed?
+    IEnumerator LookForBoardData()
+    {
+        yield return new WaitForSecondsRealtime(0.3F);
+
+        Debug.LogWarning("looking for game board data to load...");
+
+        if (GameManager.inst.initialLoad && !uiObjects[0].gameObject.activeInHierarchy)
+        {
+            LoadPlayersUI(GameManager.inst.myUser, GameManager.inst.players);
+            SnapPlayersToSpaces();
+        }
+
         for (int i = 0; i < GameManager.inst.players.Length; i++) GameManager.inst.players[i].ready = false;
+        ServerManager.server?.SetReady();
     }
 
     public void LoadPlayersUI(int thisPlayer, PlayerObject[] players)
     {
-        for(int i = 0; i < players.Length; i++)
+        Debug.LogWarning("player list length:" + players.Length);
+        Debug.LogWarning("player index: " + thisPlayer);
+
+        for (int i = 0; i < players.Length; i++)
         {
             uiObjects[i].gameObject.SetActive(true);
             uiObjects[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = players[i].username;
             playerTokens[i].gameObject.SetActive(true);
 
             if (i == thisPlayer) uiObjects[thisPlayer].transform.GetChild(2).gameObject.SetActive(true);
+
+            Debug.Log("loaded player ui for " + players[i].username);
         }
+
+        Debug.Log("finished loading player ui");
     }
 
     public void SetPlayerTurn(int player)
@@ -137,7 +156,7 @@ public class GameBoardConnector : MonoBehaviour
 
     public void SnapPlayersToSpaces()
     {
-        for(int i = 0; i < playerTokens.Length; i++)
+        for(int i = 0; i < GameManager.inst.players.Length; i++)
         {
             playerTokens[i].SetMyLocation(allSpaces[GameManager.inst.players[i].currentSpace]);
         }
