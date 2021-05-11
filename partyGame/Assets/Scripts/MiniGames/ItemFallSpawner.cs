@@ -15,7 +15,6 @@ public class ItemFallSpawner : MinigameLoader
     {
         base.StartGame();
         StartCoroutine("DropTime", 3);
-        StartCoroutine(SendToServer(1f));
         minigameState = true;
     }
 
@@ -27,7 +26,10 @@ public class ItemFallSpawner : MinigameLoader
             gameDuration -= Time.deltaTime;
 
             if (gameDuration < 0)
+            {
                 minigameState = false;
+                SendFinalScore(ItemCollector.inst.itemsCollected.ToString());
+            }
         }
         else if (!minigameState)
         {
@@ -46,13 +48,6 @@ public class ItemFallSpawner : MinigameLoader
             DropItem(difficulty);
         }
         StartCoroutine("DropTime", 1.5);
-    }
-
-    public IEnumerator SendToServer(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        ServerManager.server?.SendMinigameData(ItemCollector.inst.itemsCollected.ToString());
-        if (minigameState) StartCoroutine(SendToServer(delay));
     }
 
     public void DropItem(int level)

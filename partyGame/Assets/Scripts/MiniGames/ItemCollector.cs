@@ -29,6 +29,8 @@ public class ItemCollector : MonoBehaviour
                 itemsCollected--;
                 Destroy(collision.gameObject);
             }
+
+            ServerManager.server?.SendMinigameData(itemsCollected.ToString());
         }
     }
 

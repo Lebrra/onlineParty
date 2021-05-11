@@ -37,7 +37,7 @@ public class GameBoardConnector : MonoBehaviour
 
     IEnumerator LookForBoardData()
     {
-        yield return new WaitForSecondsRealtime(0.3F);
+        yield return new WaitForSecondsRealtime(0.1F);
 
         Debug.LogWarning("looking for game board data to load...");
 
