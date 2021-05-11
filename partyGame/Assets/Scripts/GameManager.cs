@@ -87,6 +87,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Index: " + index);
         Debug.Log(players[index].username + " has rolled a " + amount);
+        players[index].currentSpace += amount;
         GameBoardConnector.inst?.ShowDiceRoll(amount);
 
         // then maybe start corutine for movement?

@@ -100,4 +100,11 @@ public class PlayerToken : MonoBehaviour
                 return;
         }
     }
+
+    public void SetMyLocation(BoardSpace newSpace)
+    {
+        mySpace = newSpace.gameObject;
+        transform.position = mySpace.GetComponent<BoardSpace>().pos1.transform.position;
+        transform.rotation = Quaternion.Euler(Vector3.up * mySpace.GetComponent<BoardSpace>().direction * 90);
+    }
 }

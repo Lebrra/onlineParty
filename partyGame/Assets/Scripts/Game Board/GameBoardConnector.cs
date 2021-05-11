@@ -16,6 +16,8 @@ public class GameBoardConnector : MonoBehaviour
     [Header("Not UI")]
     public PlayerToken[] playerTokens;
 
+    public BoardSpace[] allSpaces;
+
     Color32 normalColor = new Color32(212, 212, 212, 255);
     Color32 turnColor = new Color32(103, 243, 127, 255);
 
@@ -131,5 +133,13 @@ public class GameBoardConnector : MonoBehaviour
     {
         DisableActions();
         foreach (Image a in uiObjects) a.color = normalColor;
+    }
+
+    public void SnapPlayersToSpaces()
+    {
+        for(int i = 0; i < playerTokens.Length; i++)
+        {
+            playerTokens[i].SetMyLocation(allSpaces[GameManager.inst.players[i].currentSpace]);
+        }
     }
 }
