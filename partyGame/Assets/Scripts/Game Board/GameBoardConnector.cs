@@ -13,6 +13,11 @@ public class GameBoardConnector : MonoBehaviour
     public TextMeshProUGUI turnText;
     public Image[] uiObjects;
 
+    public GameObject endScreen;
+    public TextMeshProUGUI endText;
+
+    public GameObject pauseScreen;
+
     [Header("Not UI")]
     public PlayerToken[] playerTokens;
 
@@ -31,8 +36,15 @@ public class GameBoardConnector : MonoBehaviour
     private void Start()
     {
         diceScreen.SetActive(false);
+        pauseScreen.SetActive(false);
+        endScreen.SetActive(false);
 
         StartCoroutine(LookForBoardData());
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape)) ShowPauseScreen();
     }
 
     IEnumerator LookForBoardData()
@@ -91,6 +103,11 @@ public class GameBoardConnector : MonoBehaviour
     {
         actionChoice.SetActive(true);
         foreach (Button b in actionChoice.GetComponentsInChildren<Button>()) b.interactable = buttons;
+
+        // set transperency on panel if not my turn
+        Color32 panelColor = actionChoice.GetComponent<Image>().color;
+        if (buttons) actionChoice.GetComponent<Image>().color = new Color32(panelColor.r, panelColor.g, panelColor.b, 255);
+        else actionChoice.GetComponent<Image>().color = new Color32(panelColor.r, panelColor.g, panelColor.b, 123);
     }
     public void DisableActions()
     {
@@ -148,6 +165,7 @@ public class GameBoardConnector : MonoBehaviour
         }
         else
         {
+            GameManager.inst?.CheckForWin(player);
             EndTurn();
             GameManager.inst?.EndTurn();
         }
@@ -163,6 +181,7 @@ public class GameBoardConnector : MonoBehaviour
     {
         for(int i = 0; i < GameManager.inst.players.Length; i++)
         {
+            Debug.Log("setting player location: " + GameManager.inst.players[i].username + " at index " + GameManager.inst.players[i].currentSpace);
             playerTokens[i].SetMyLocation(allSpaces[GameManager.inst.players[i].currentSpace]);
         }
     }
@@ -171,5 +190,22 @@ public class GameBoardConnector : MonoBehaviour
     {
         turnText.transform.parent.gameObject.SetActive(true);
         turnText.text = GameManager.inst.players[player].username + "'s Winning Roll!";
+    }
+
+    public void ShowEndScreen(string winner)
+    {
+        endScreen.SetActive(true);
+        endText.text = "<#C12089>" + winner + "</color> has Won!";
+    }
+
+    public void ShowPauseScreen()
+    {
+        pauseScreen.SetActive(!pauseScreen.activeInHierarchy);
+    }
+
+    public void QuitGame()
+    {
+        ServerManager.server?.LeaveRoom();
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 }
