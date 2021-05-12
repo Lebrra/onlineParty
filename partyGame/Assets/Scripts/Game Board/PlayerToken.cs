@@ -50,7 +50,7 @@ public class PlayerToken : MonoBehaviour
     {
         //speed += 1.1f * Time.deltaTime;
 
-        if (!mySpace.GetComponent<BoardSpace>())
+        if (!mySpace.GetComponent<BoardSpace>().nextSpace)
         {
             Debug.LogWarning("player has won already, I cannot move any more!");
             return;
