@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
             players[i].username = playerList[i].username;
 
             players[i].ready = false;
+            players[i].disconnected = false;
             players[i].currentSpace = 0;
 
             Debug.Log("loaded player " + players[i].username);
@@ -103,6 +104,7 @@ public class GameManager : MonoBehaviour
     public void GetSelectedMinigame(string minigame)
     {
         Debug.Log("selected minigame: " + minigame);
+        GameBoardConnector.inst?.DisableActions();
         StartCoroutine(myMM?.GoToMinigame(minigame));
     }
 
@@ -131,4 +133,6 @@ public struct PlayerObject
 
     public int currentSpace;
     public bool ready;
+
+    public bool disconnected;
 }

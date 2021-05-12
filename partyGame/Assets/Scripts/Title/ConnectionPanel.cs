@@ -9,11 +9,22 @@ public class ConnectionPanel : MonoBehaviour
     private void Awake()
     {
         inst = this;
+        if (ServerManager.server) if (ServerManager.server.connected) DisablePanel();
     }
 
     public void DisablePanel()
     {
-        inst = null;
+        //inst = null;
         gameObject.SetActive(false);
+    }
+
+    public void EnablePanel()
+    {
+        gameObject.SetActive(true);
+    }
+
+    public void QuitButton()
+    {
+        Application.Quit();
     }
 }

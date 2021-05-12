@@ -24,6 +24,8 @@ public class LobbyManager : MonoBehaviour
     Dictionary<string, GameObject> names;
     public UnityEngine.UI.Button playButton;
 
+    public Animator copyAnim;
+
     void Awake()
     {
         instance = this;
@@ -154,5 +156,16 @@ public class LobbyManager : MonoBehaviour
     public void PlayGame()
     {
         ServerManager.server.StartGame();
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    public void CopyRoomCode()
+    {
+        GUIUtility.systemCopyBuffer = roomName.text;
+        copyAnim.SetTrigger("Flash");
     }
 }

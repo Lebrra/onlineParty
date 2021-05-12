@@ -22,6 +22,9 @@ public class MinigameLoader : MonoBehaviour
     public TextMeshProUGUI winnerText;
     public GameObject endPanel;
 
+    int waitingTime = 60;
+    bool waiting = false;
+
     [Header("Minigame Properties")]
     public bool minigameState = false;
 
@@ -137,6 +140,25 @@ public class MinigameLoader : MonoBehaviour
     {
         yield return new WaitForSeconds(3F);
         endPanel.SetActive(true);
+
+        StartCoroutine(ConnectionTimer());
+    }
+
+    IEnumerator ConnectionTimer()
+    {
+        yield return new WaitForSeconds(1F);
+        waitingTime--;
+
+        if(waitingTime == 0 && !waiting)
+        {
+            ReturnReadyCheck();
+        }
+        //StartCoroutine(ConnectionTimer());
+        if (waitingTime > -1)
+        {
+            endPanel.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = waitingTime.ToString();
+            StartCoroutine(ConnectionTimer());
+        }
     }
 
     public void ReturnReadyCheck()
@@ -149,5 +171,13 @@ public class MinigameLoader : MonoBehaviour
         temp.GetComponent<LoadingAnim>().enabled = false;
         temp.GetComponent<TextMeshProUGUI>().text = "Waiting for players";
         temp.GetComponent<LoadingAnim>().enabled = true;
+        waiting = true;
+    }
+
+    public void DisconnectedUI(int player)
+    {
+        playerReadyUI[player].transform.GetChild(2).GetComponent<TextMeshProUGUI>().fontStyle = FontStyles.Strikethrough;
+        playerScoreContainers[player].transform.GetChild(0).GetComponent<TextMeshProUGUI>().fontStyle = FontStyles.Strikethrough;
+        playerScoreContainers[player].transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = "-1000";
     }
 }

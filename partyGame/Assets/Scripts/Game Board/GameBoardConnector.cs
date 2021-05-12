@@ -9,8 +9,8 @@ public class GameBoardConnector : MonoBehaviour
     public static GameBoardConnector inst;
 
     [Header("UI")]
-    public GameObject actionChoice, diceScreen;
     public TextMeshProUGUI turnText;
+    public GameObject actionChoice, diceScreen;
     public Image[] uiObjects;
 
     public GameObject endScreen;
@@ -75,6 +75,7 @@ public class GameBoardConnector : MonoBehaviour
             playerTokens[i].gameObject.SetActive(true);
 
             if (i == thisPlayer) uiObjects[thisPlayer].transform.GetChild(2).gameObject.SetActive(true);
+            if (players[i].disconnected) DisconnectedUI(i);
 
             Debug.Log("loaded player ui for " + players[i].username);
         }
@@ -207,5 +208,10 @@ public class GameBoardConnector : MonoBehaviour
     {
         ServerManager.server?.LeaveRoom();
         UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+    }
+
+    public void DisconnectedUI(int player)
+    {
+        uiObjects[player].transform.GetChild(1).GetComponent<TextMeshProUGUI>().fontStyle = FontStyles.Strikethrough;
     }
 }

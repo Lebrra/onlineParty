@@ -8,6 +8,8 @@ public class ServerManager : MonoBehaviour
 {
     public static ServerManager server;
 
+    public bool connected = false;
+
     [TextArea(3, 10)]
     public string serverQuickRef;
 
@@ -39,6 +41,8 @@ public class ServerManager : MonoBehaviour
         socket.On("joinedRoom", JoiningRoom);
         socket.On("roomNotFound", RoomError);
         socket.On("ping", Ping);
+
+        socket.On("playerDisconnect", PlayerDisconnected);
 
         // Game Functions
         socket.On("loadGame", LoadBoardScene);
@@ -87,6 +91,7 @@ public class ServerManager : MonoBehaviour
     {
         //disable connector screen
         ConnectionPanel.inst?.DisablePanel();
+        connected = true;
     }
 
     public void ChangeUsername(string name)
@@ -130,6 +135,18 @@ public class ServerManager : MonoBehaviour
     {
         //Debug.Log("Ping");
         //ConnectionIndicator.instance?.Ping();
+    }
+
+    void PlayerDisconnected(SocketIOEvent evt)
+    {
+        int playerInd = -1;
+        if(int.TryParse(evt.data.GetField("player").ToString().Trim(Quote.quote), out playerInd))
+        {
+            GameManager.inst.players[playerInd].disconnected = true;
+            Debug.LogWarning(GameManager.inst.players[playerInd].username + " has disconnected!");
+            GameBoardConnector.inst?.DisconnectedUI(playerInd);
+        }
+        Debug.LogError("disconnected player not found: " + evt.data.ToString());
     }
 
     #endregion
