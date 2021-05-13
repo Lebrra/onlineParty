@@ -18,6 +18,9 @@ public class GameBoardConnector : MonoBehaviour
 
     public GameObject pauseScreen;
 
+    public Transform[] minimapTokens;
+    public MinimapSpacer[] minimapSpaces; // - 1 for any references because Start space is not included!
+
     [Header("Not UI")]
     public PlayerToken[] playerTokens;
 
@@ -73,6 +76,7 @@ public class GameBoardConnector : MonoBehaviour
             uiObjects[i].gameObject.SetActive(true);
             uiObjects[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = players[i].username;
             playerTokens[i].gameObject.SetActive(true);
+            minimapTokens[i].gameObject.SetActive(true);
 
             if (i == thisPlayer) uiObjects[thisPlayer].transform.GetChild(2).gameObject.SetActive(true);
             if (players[i].disconnected) DisconnectedUI(i);
@@ -151,10 +155,12 @@ public class GameBoardConnector : MonoBehaviour
         Dice.inst.ResetDie();
         turnText.transform.parent.gameObject.SetActive(false);
 
-        StartCoroutine(MovePlayerToken(player, amount));
+        int originalLoc = GameManager.inst.players[player].currentSpace - amount;
+
+        StartCoroutine(MovePlayerToken(player, amount, originalLoc));
     }
 
-    IEnumerator MovePlayerToken(int player, int amount)
+    IEnumerator MovePlayerToken(int player, int amount, int prev)
     {
         yield return new WaitForSeconds(0.7F);
         Debug.Log("moving player");
@@ -162,7 +168,8 @@ public class GameBoardConnector : MonoBehaviour
         if (amount > 0)
         {
             playerTokens[player].AdvanceSpace();
-            StartCoroutine(MovePlayerToken(player, amount - 1));
+            SetMinimapToken(player, prev + 1, prev);
+            StartCoroutine(MovePlayerToken(player, amount - 1, prev + 1));
         }
         else
         {
@@ -184,7 +191,14 @@ public class GameBoardConnector : MonoBehaviour
         {
             Debug.Log("setting player location: " + GameManager.inst.players[i].username + " at index " + GameManager.inst.players[i].currentSpace);
             playerTokens[i].SetMyLocation(allSpaces[GameManager.inst.players[i].currentSpace]);
+            SetMinimapToken(i, GameManager.inst.players[i].currentSpace, 0);
         }
+    }
+
+    public void SetMinimapToken(int player, int current, int previous)
+    {
+        if (previous > 0) minimapSpaces[previous - 1].RemoveFromLayout();
+        if (current > 0) minimapSpaces[current - 1].AddToLayout(minimapTokens[player]);
     }
 
     public void SetRewardsText(int player)
