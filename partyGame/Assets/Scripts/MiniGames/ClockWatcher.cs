@@ -22,7 +22,7 @@ public class ClockWatcher : MinigameLoader
     public override void StartGame()
     {
         base.StartGame();
-        minigameState = true;
+        //minigameState = true;
         StartCoroutine("StartClock", 3f);
         StartCoroutine("HideClock", 7f);
     }
