@@ -15,7 +15,7 @@ public class MinigameManager : MonoBehaviour
 
     private void Start()
     {
-        minigameScreen.SetActive(false);
+        GameBoardConnector.inst?.minigameScreen.SetActive(false);
         ResetActivePool();
     }
 
@@ -57,8 +57,10 @@ public class MinigameManager : MonoBehaviour
             yield break;
         }
 
-        minigameScreen.SetActive(true);
-        minigameScreen.transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().sprite = currentGame.screenshot;
+        GameBoardConnector.inst?.EnableMinigameScreen(currentGame.screenshot);
+
+        //minigameScreen.SetActive(true);
+        //minigameScreen.transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().sprite = currentGame.screenshot;
 
         yield return new WaitForSeconds(4);
 

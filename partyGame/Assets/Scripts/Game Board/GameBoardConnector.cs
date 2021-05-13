@@ -21,6 +21,8 @@ public class GameBoardConnector : MonoBehaviour
     public Transform[] minimapTokens;
     public MinimapSpacer[] minimapSpaces; // - 1 for any references because Start space is not included!
 
+    public GameObject minigameScreen;
+
     [Header("Not UI")]
     public PlayerToken[] playerTokens;
 
@@ -227,5 +229,18 @@ public class GameBoardConnector : MonoBehaviour
     public void DisconnectedUI(int player)
     {
         uiObjects[player].transform.GetChild(1).GetComponent<TextMeshProUGUI>().fontStyle = FontStyles.Strikethrough;
+    }
+
+    public void EnableMinigameScreen(Sprite img)
+    {
+        if (img != null)
+        {
+            minigameScreen.SetActive(true);
+            minigameScreen.transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().sprite = img;
+        }
+        else
+        {
+            minigameScreen.SetActive(false);
+        }
     }
 }
