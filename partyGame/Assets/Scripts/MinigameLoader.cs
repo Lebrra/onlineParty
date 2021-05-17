@@ -122,6 +122,7 @@ public class MinigameLoader : MonoBehaviour
         {
             Debug.Log("Nobody won!");
             winnerText.text = "Nobody won...";
+            GameManager.inst.myTurn = false;
         }
         else
         {
