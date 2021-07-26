@@ -4986,8 +4986,8 @@ GameObject:
   - component: {fileID: 4763585080532870116}
   - component: {fileID: 4763585080534875432}
   - component: {fileID: 4763585080534875431}
-  - component: {fileID: 4763585080534875430}
   - component: {fileID: 4763585080534875429}
+  - component: {fileID: 4763585080534875433}
   m_Layer: 0
   m_Name: Bucket
   m_TagString: Untagged
@@ -5010,20 +5010,6 @@ MonoBehaviour:
   itemsCollected: 0
   badItemsCollected: 0
   scoreText: {fileID: 0}
---- !u!114 &4763585080534875430
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4763585080534875428}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e40737deea583f240a1995c0a2a1f6c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dead: 0
-  moveSpeed: 7
 --- !u!65 &4763585080534875431
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5053,6 +5039,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 124
   m_CollisionDetection: 0
+--- !u!114 &4763585080534875433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4763585080534875428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f7e9ad8313f71a4e8e6db018e759a76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dead: 0
+  moveSpeed: 7
 --- !u!4 &4763585080535163140
 Transform:
   m_ObjectHideFlags: 0

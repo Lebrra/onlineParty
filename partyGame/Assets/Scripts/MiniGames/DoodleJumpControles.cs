@@ -8,7 +8,9 @@ public class DoodleJumpControles : MonoBehaviour
     Collider c;
 
     public bool dead = false;
+    public bool falling = false;
     public float moveSpeed;
+
     float movement = 0f;
 
     void Start()
@@ -20,6 +22,16 @@ public class DoodleJumpControles : MonoBehaviour
     void Update()
     {
         movement = Input.GetAxis("Horizontal") * moveSpeed;
+
+        if(rb.velocity.y < 0)
+            falling = true;
+        else
+            falling = false;
+
+        if (falling)
+            c.enabled = true;
+        else
+            c.enabled = false;
     }
 
     private void FixedUpdate()
@@ -34,15 +46,6 @@ public class DoodleJumpControles : MonoBehaviour
         else
         {
             rb.isKinematic = true;
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("MainCamera"))
-        {
-            dead = true;
-            CameraFollow.inst.StartCam = false;
         }
     }
 }

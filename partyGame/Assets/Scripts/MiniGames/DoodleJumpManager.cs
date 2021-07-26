@@ -13,7 +13,6 @@ public class DoodleJumpManager : MinigameLoader
         target.GetComponent<DoodleJumpControles>().dead = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         totalDist = Vector3.Distance(transform.position, target.transform.position);
