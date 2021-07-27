@@ -8,15 +8,23 @@ public class Platform : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.relativeVelocity.y <= 0f)
+        if (collision.relativeVelocity.y <= 0f)
         {
             Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
-            if(rb != null)
+            if (rb != null)
             {
                 Vector3 vel = rb.velocity;
                 vel.y = jumpForce;
                 rb.velocity = vel;
             }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("MainCamera"))
+        {
+            gameObject.SetActive(false);
         }
     }
 }
